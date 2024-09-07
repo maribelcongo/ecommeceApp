@@ -1,0 +1,47 @@
+/* slideInfinito.css */
+
+@keyframes slide {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-100%);
+	}
+}
+
+.container {
+	margin: auto;
+	white-space: nowrap;
+	overflow: hidden;
+	position: relative;
+	background-color: #c55e82;
+	color: rgb(10, 10, 10);
+	width: 100%;
+	padding: 5px;
+	height: 30px;
+}
+
+.list {
+	display: flex;
+	animation: 10s slide infinite linear;
+	padding: 0;
+	margin: 0;
+	white-space: nowrap;
+}
+
+.list1:hover {
+	animation-play-state: paused;
+}
+
+.list li {
+	display: inline-flex;
+	align-items: center;
+	padding: 0 20px;
+	max-width: 100%;
+	box-sizing: border-box;
+	font-size: 18px;
+}
+
+.list li svg {
+	margin-right: 10px;
+}
