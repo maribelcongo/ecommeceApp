@@ -7,9 +7,12 @@ import {
 	Badge,
 	Menu,
 	MenuItem,
+	Divider,
 } from "@mui/material";
 import { ShoppingCart, Person, Menu as MenuIcon } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 import logo from "../../assets/encantadaLogo.jpg";
+
 const Navbar = () => {
 	const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -43,6 +46,7 @@ const Navbar = () => {
 					edge="start"
 					color="inherit"
 					aria-label="menu"
+					onClick={handleMenuOpen}
 					sx={{ mr: 2, color: "#c55e82" }}
 				>
 					<MenuIcon sx={{ fontSize: 30 }} />
@@ -98,6 +102,50 @@ const Navbar = () => {
 					<MenuItem onClick={handleMenuClose}>Logout</MenuItem>
 				</Menu>
 			</Toolbar>
+
+			{/* Products Menu */}
+			<Menu
+				anchorEl={anchorEl}
+				open={Boolean(anchorEl)}
+				onClose={handleMenuClose}
+			>
+				<MenuItem onClick={handleMenuClose}>
+					<Typography variant="h6">Productos</Typography>
+				</MenuItem>
+				<Divider />
+				<MenuItem onClick={handleMenuClose}>
+					<Link
+						to="/carteras"
+						style={{ textDecoration: "none", color: "inherit" }}
+					>
+						Carteras
+					</Link>
+				</MenuItem>
+				<MenuItem onClick={handleMenuClose}>
+					<Link
+						to="/mochilas"
+						style={{ textDecoration: "none", color: "inherit" }}
+					>
+						Mochilas
+					</Link>
+				</MenuItem>
+				<MenuItem onClick={handleMenuClose}>
+					<Link
+						to="/billeteras"
+						style={{ textDecoration: "none", color: "inherit" }}
+					>
+						Billeteras
+					</Link>
+				</MenuItem>
+				<MenuItem onClick={handleMenuClose}>
+					<Link
+						to="/riñoneras"
+						style={{ textDecoration: "none", color: "inherit" }}
+					>
+						Riñoneras
+					</Link>
+				</MenuItem>
+			</Menu>
 		</AppBar>
 	);
 };
