@@ -1,0 +1,42 @@
+.carousel-box {
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+.splide__arrow {
+	background-color: rgba(0, 0, 0, 0.5);
+	border-radius: 50%;
+	width: 30px;
+	height: 30px;
+}
+
+.splide__arrow--prev {
+	left: 15px;
+}
+
+.splide__arrow--next {
+	right: 15px;
+}
+
+.splide__pagination {
+	bottom: 10px;
+}
+
+.splide__pagination__page {
+	width: 10px;
+	height: 10px;
+	background-color: rgba(0, 0, 0, 0.5);
+	border-radius: 50%;
+}
+
+.carousel-home {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+.carousel-home {
+	object-fit: cover;
+	width: 250px;
+	margin: 10px;
+}

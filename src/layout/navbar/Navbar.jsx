@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	AppBar,
 	Toolbar,
@@ -7,24 +7,51 @@ import {
 	Badge,
 	Menu,
 	MenuItem,
-	Divider,
+	Dialog,
 } from "@mui/material";
 import { ShoppingCart, Person, Menu as MenuIcon } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"; // Importamos Link para la navegación
+import LoginForm from "../../components/admin/LoginForm";
+import RegisterForm from "../../components/admin/RegisterForm";
 import logo from "../../assets/encantadaLogo.jpg";
 
 const Navbar = () => {
-	const [anchorEl, setAnchorEl] = React.useState(null);
+	const [anchorElUser, setAnchorElUser] = useState(null);
+	const [anchorElMenu, setAnchorElMenu] = useState(null);
+	const [openLogin, setOpenLogin] = useState(false);
+	const [openRegister, setOpenRegister] = useState(false);
 
 	const handleMenuOpen = (event) => {
-		setAnchorEl(event.currentTarget);
+		setAnchorElMenu(event.currentTarget);
 	};
 
 	const handleMenuClose = () => {
-		setAnchorEl(null);
+		setAnchorElMenu(null);
 	};
 
-	const isMenuOpen = Boolean(anchorEl);
+	const handleUserMenuOpen = (event) => {
+		setAnchorElUser(event.currentTarget);
+	};
+
+	const handleUserMenuClose = () => {
+		setAnchorElUser(null);
+	};
+
+	const handleLoginOpen = () => {
+		setOpenLogin(true);
+	};
+
+	const handleLoginClose = () => {
+		setOpenLogin(false);
+	};
+
+	const handleRegisterOpen = () => {
+		setOpenRegister(true);
+	};
+
+	const handleRegisterClose = () => {
+		setOpenRegister(false);
+	};
 
 	return (
 		<AppBar
@@ -41,18 +68,18 @@ const Navbar = () => {
 					background: "#fff",
 				}}
 			>
-				{/* Menu Button */}
+				{/* Botón de Menú */}
 				<IconButton
 					edge="start"
 					color="inherit"
 					aria-label="menu"
-					onClick={handleMenuOpen}
 					sx={{ mr: 2, color: "#c55e82" }}
+					onClick={handleMenuOpen} // Evento para abrir el menú hamburguesa
 				>
 					<MenuIcon sx={{ fontSize: 30 }} />
 				</IconButton>
 
-				{/* Logo in the center */}
+				{/* Logo en el centro */}
 				<Typography
 					component="div"
 					sx={{
@@ -69,7 +96,7 @@ const Navbar = () => {
 					/>
 				</Typography>
 
-				{/* Cart Icon */}
+				{/* Icono del Carrito */}
 				<IconButton color="inherit" sx={{ color: "#c55e82" }}>
 					<Badge
 						badgeContent={4}
@@ -84,39 +111,51 @@ const Navbar = () => {
 					</Badge>
 				</IconButton>
 
-				{/* User Icon */}
+				{/* Icono del Usuario */}
 				<IconButton
 					edge="end"
 					color="inherit"
 					aria-label="user"
-					onClick={handleMenuOpen}
 					sx={{ color: "#c55e82" }}
+					onClick={handleUserMenuOpen} // Evento para abrir el menú de usuario
 				>
 					<Person sx={{ fontSize: 30 }} />
 				</IconButton>
 
-				{/* User Menu */}
-				<Menu anchorEl={anchorEl} open={isMenuOpen} onClose={handleMenuClose}>
-					<MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-					<MenuItem onClick={handleMenuClose}>My account</MenuItem>
-					<MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+				{/* Menú de Usuario */}
+				<Menu
+					anchorEl={anchorElUser}
+					open={Boolean(anchorElUser)}
+					onClose={handleUserMenuClose}
+				>
+					<MenuItem onClick={handleRegisterOpen}>Registrarse</MenuItem>
+					<MenuItem onClick={handleLoginOpen}>Iniciar Sesión</MenuItem>
+					<MenuItem onClick={handleUserMenuClose}>Mi cuenta</MenuItem>
+					<MenuItem onClick={handleUserMenuClose}>Cerrar Sesión</MenuItem>
 				</Menu>
 			</Toolbar>
 
-			{/* Products Menu */}
+			{/* Menú Hamburguesa */}
 			<Menu
-				anchorEl={anchorEl}
-				open={Boolean(anchorEl)}
+				anchorEl={anchorElMenu}
+				open={Boolean(anchorElMenu)}
 				onClose={handleMenuClose}
 			>
-				<MenuItem onClick={handleMenuClose}>
+				<MenuItem>
 					<Typography variant="h6">Productos</Typography>
 				</MenuItem>
-				<Divider />
+				<MenuItem onClick={handleMenuClose}>
+					<Link
+						to="/todos"
+						style={{ textDecoration: "none", color: "#333", cursor: "pointer" }}
+					>
+						todos
+					</Link>
+				</MenuItem>
 				<MenuItem onClick={handleMenuClose}>
 					<Link
 						to="/carteras"
-						style={{ textDecoration: "none", color: "inherit" }}
+						style={{ textDecoration: "none", color: "#333", cursor: "pointer" }}
 					>
 						Carteras
 					</Link>
@@ -124,7 +163,7 @@ const Navbar = () => {
 				<MenuItem onClick={handleMenuClose}>
 					<Link
 						to="/mochilas"
-						style={{ textDecoration: "none", color: "inherit" }}
+						style={{ textDecoration: "none", color: "#333", cursor: "pointer" }}
 					>
 						Mochilas
 					</Link>
@@ -132,7 +171,7 @@ const Navbar = () => {
 				<MenuItem onClick={handleMenuClose}>
 					<Link
 						to="/billeteras"
-						style={{ textDecoration: "none", color: "inherit" }}
+						style={{ textDecoration: "none", color: "#333", cursor: "pointer" }}
 					>
 						Billeteras
 					</Link>
@@ -140,12 +179,22 @@ const Navbar = () => {
 				<MenuItem onClick={handleMenuClose}>
 					<Link
 						to="/riñoneras"
-						style={{ textDecoration: "none", color: "inherit" }}
+						style={{ textDecoration: "none", color: "#333", cursor: "pointer" }}
 					>
 						Riñoneras
 					</Link>
 				</MenuItem>
 			</Menu>
+
+			{/* Diálogo de Iniciar Sesión */}
+			<Dialog open={openLogin} onClose={handleLoginClose}>
+				<LoginForm onClose={handleLoginClose} />
+			</Dialog>
+
+			{/* Diálogo de Registro */}
+			<Dialog open={openRegister} onClose={handleRegisterClose}>
+				<RegisterForm onClose={handleRegisterClose} />
+			</Dialog>
 		</AppBar>
 	);
 };

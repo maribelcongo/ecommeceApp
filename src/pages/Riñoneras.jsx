@@ -1,7 +1,7 @@
 import React from "react";
 
 const Riñoneras = () => {
-	return <div>Sección de Carteras</div>;
+	return <div></div>;
 };
 
 export default Riñoneras;
