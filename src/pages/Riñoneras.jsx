@@ -1,7 +1,7 @@
 import React from "react";
 
 const Riñoneras = () => {
-	return <div></div>;
+	return <div>seccion riñoneras </div>;
 };
 
 export default Riñoneras;

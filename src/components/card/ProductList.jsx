@@ -45,7 +45,7 @@ const ProductList = () => {
 	}, [location.pathname]); // Vuelve a ejecutar cuando cambie la ruta
 
 	return (
-		<div>
+		<div className="productListContainer">
 			{products.length > 0 ? (
 				products.map((product) => (
 					<CardProduct key={product.id} product={product} />

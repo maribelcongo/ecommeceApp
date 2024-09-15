@@ -8,58 +8,54 @@ import {
 	Menu,
 	MenuItem,
 	Dialog,
+	DialogTitle,
+	DialogContent,
+	DialogActions,
+	Button,
+	Icon,
 } from "@mui/material";
-import { ShoppingCart, Person, Menu as MenuIcon } from "@mui/icons-material";
-import { Link } from "react-router-dom"; // Importamos Link para la navegación
-import LoginForm from "../../components/admin/LoginForm";
-import RegisterForm from "../../components/admin/RegisterForm";
+import {
+	ShoppingCart,
+	Person,
+	Menu as MenuIcon,
+	Delete,
+} from "@mui/icons-material";
+import { Link } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
 import logo from "../../assets/encantadaLogo.jpg";
+import "./navbar.css";
 
 const Navbar = () => {
 	const [anchorElUser, setAnchorElUser] = useState(null);
 	const [anchorElMenu, setAnchorElMenu] = useState(null);
+	const [openCart, setOpenCart] = useState(false);
 	const [openLogin, setOpenLogin] = useState(false);
 	const [openRegister, setOpenRegister] = useState(false);
 
-	const handleMenuOpen = (event) => {
-		setAnchorElMenu(event.currentTarget);
-	};
+	const { cart, removeFromCart } = useCart();
 
-	const handleMenuClose = () => {
-		setAnchorElMenu(null);
-	};
+	const handleMenuOpen = (event) => setAnchorElMenu(event.currentTarget);
+	const handleMenuClose = () => setAnchorElMenu(null);
+	const handleUserMenuOpen = (event) => setAnchorElUser(event.currentTarget);
+	const handleUserMenuClose = () => setAnchorElUser(null);
+	const handleCartOpen = () => setOpenCart(true);
+	const handleCartClose = () => setOpenCart(false);
+	const handleLoginOpen = () => setOpenLogin(true);
+	const handleLoginClose = () => setOpenLogin(false);
+	const handleRegisterOpen = () => setOpenRegister(true);
+	const handleRegisterClose = () => setOpenRegister(false);
 
-	const handleUserMenuOpen = (event) => {
-		setAnchorElUser(event.currentTarget);
-	};
-
-	const handleUserMenuClose = () => {
-		setAnchorElUser(null);
-	};
-
-	const handleLoginOpen = () => {
-		setOpenLogin(true);
-	};
-
-	const handleLoginClose = () => {
-		setOpenLogin(false);
-	};
-
-	const handleRegisterOpen = () => {
-		setOpenRegister(true);
-	};
-
-	const handleRegisterClose = () => {
-		setOpenRegister(false);
-	};
+	const cartTotal = cart.reduce(
+		(acc, item) => acc + Number(item.price) * Number(item.quantity),
+		0
+	);
+	const cartItemsCount = cart.reduce(
+		(acc, item) => acc + Number(item.quantity),
+		0
+	);
 
 	return (
-		<AppBar
-			position="static"
-			sx={{
-				backgroundColor: "#333",
-			}}
-		>
+		<AppBar position="static" sx={{ backgroundColor: "#333" }}>
 			<Toolbar
 				sx={{
 					display: "flex",
@@ -68,61 +64,44 @@ const Navbar = () => {
 					background: "#fff",
 				}}
 			>
-				{/* Botón de Menú */}
 				<IconButton
 					edge="start"
 					color="inherit"
 					aria-label="menu"
 					sx={{ mr: 2, color: "#c55e82" }}
-					onClick={handleMenuOpen} // Evento para abrir el menú hamburguesa
+					onClick={handleMenuOpen}
 				>
 					<MenuIcon sx={{ fontSize: 30 }} />
 				</IconButton>
 
-				{/* Logo en el centro */}
-				<Typography
-					component="div"
-					sx={{
-						flexGrow: 1,
-						textAlign: "center",
-					}}
-				>
-					<img
-						src={logo}
-						alt="Logo"
-						style={{
-							height: 85,
-						}}
-					/>
+				<Typography component="div" sx={{ flexGrow: 1, textAlign: "center" }}>
+					<img src={logo} alt="Logo" style={{ height: 85 }} />
 				</Typography>
 
-				{/* Icono del Carrito */}
-				<IconButton color="inherit" sx={{ color: "#c55e82" }}>
+				<IconButton
+					color="inherit"
+					sx={{ color: "#c55e82" }}
+					onClick={handleCartOpen}
+				>
 					<Badge
-						badgeContent={4}
+						badgeContent={cartItemsCount}
 						color="error"
-						sx={{
-							"& .MuiBadge-dot": {
-								backgroundColor: "#ff5722",
-							},
-						}}
+						sx={{ "& .MuiBadge-dot": { backgroundColor: "#ff5722" } }}
 					>
 						<ShoppingCart sx={{ fontSize: 30 }} />
 					</Badge>
 				</IconButton>
 
-				{/* Icono del Usuario */}
 				<IconButton
 					edge="end"
 					color="inherit"
 					aria-label="user"
 					sx={{ color: "#c55e82" }}
-					onClick={handleUserMenuOpen} // Evento para abrir el menú de usuario
+					onClick={handleUserMenuOpen}
 				>
 					<Person sx={{ fontSize: 30 }} />
 				</IconButton>
 
-				{/* Menú de Usuario */}
 				<Menu
 					anchorEl={anchorElUser}
 					open={Boolean(anchorElUser)}
@@ -135,27 +114,28 @@ const Navbar = () => {
 				</Menu>
 			</Toolbar>
 
-			{/* Menú Hamburguesa */}
 			<Menu
 				anchorEl={anchorElMenu}
 				open={Boolean(anchorElMenu)}
 				onClose={handleMenuClose}
 			>
 				<MenuItem>
-					<Typography variant="h6">Productos</Typography>
+					<Typography variant="h6">Nuestros Productos</Typography>
 				</MenuItem>
 				<MenuItem onClick={handleMenuClose}>
-					<Link
-						to="/todos"
-						style={{ textDecoration: "none", color: "#333", cursor: "pointer" }}
-					>
-						todos
+					<Link to="/" style={{ textDecoration: "none", color: "#333" }}>
+						Inicio
+					</Link>
+				</MenuItem>
+				<MenuItem onClick={handleMenuClose}>
+					<Link to="/todos" style={{ textDecoration: "none", color: "#333" }}>
+						Todos
 					</Link>
 				</MenuItem>
 				<MenuItem onClick={handleMenuClose}>
 					<Link
 						to="/carteras"
-						style={{ textDecoration: "none", color: "#333", cursor: "pointer" }}
+						style={{ textDecoration: "none", color: "#333" }}
 					>
 						Carteras
 					</Link>
@@ -163,7 +143,7 @@ const Navbar = () => {
 				<MenuItem onClick={handleMenuClose}>
 					<Link
 						to="/mochilas"
-						style={{ textDecoration: "none", color: "#333", cursor: "pointer" }}
+						style={{ textDecoration: "none", color: "#333" }}
 					>
 						Mochilas
 					</Link>
@@ -171,7 +151,7 @@ const Navbar = () => {
 				<MenuItem onClick={handleMenuClose}>
 					<Link
 						to="/billeteras"
-						style={{ textDecoration: "none", color: "#333", cursor: "pointer" }}
+						style={{ textDecoration: "none", color: "#333" }}
 					>
 						Billeteras
 					</Link>
@@ -179,21 +159,42 @@ const Navbar = () => {
 				<MenuItem onClick={handleMenuClose}>
 					<Link
 						to="/riñoneras"
-						style={{ textDecoration: "none", color: "#333", cursor: "pointer" }}
+						style={{ textDecoration: "none", color: "#333" }}
 					>
 						Riñoneras
 					</Link>
 				</MenuItem>
 			</Menu>
 
-			{/* Diálogo de Iniciar Sesión */}
-			<Dialog open={openLogin} onClose={handleLoginClose}>
-				<LoginForm onClose={handleLoginClose} />
-			</Dialog>
-
-			{/* Diálogo de Registro */}
-			<Dialog open={openRegister} onClose={handleRegisterClose}>
-				<RegisterForm onClose={handleRegisterClose} />
+			{/* Modal de carrito */}
+			<Dialog open={openCart} onClose={handleCartClose} className="cart-dialog">
+				<DialogTitle>Carrito de Compras</DialogTitle>
+				<DialogContent>
+					<Typography variant="h6">
+						Productos en el carrito: {cartItemsCount}
+					</Typography>
+					{cart.map((item) => (
+						<div key={item.id} className="cart-item">
+							<Typography variant="body1">
+								{item.name} - ${item.price} x {item.quantity}
+							</Typography>
+							<IconButton
+								onClick={() => removeFromCart(item.id)}
+								aria-label="remove from cart"
+							>
+								<Delete />
+							</IconButton>
+						</div>
+					))}
+					<Typography variant="h6" sx={{ marginTop: 2 }}>
+						Total: ${cartTotal.toFixed(2)}
+					</Typography>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleCartClose} color="primary">
+						Cerrar
+					</Button>
+				</DialogActions>
 			</Dialog>
 		</AppBar>
 	);

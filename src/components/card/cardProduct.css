@@ -1,38 +1,6 @@
-/* 
-
-.cardProduct {
-    max-width: 245px;
-   
+.productListContainer {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 20px;
+	margin: 20px;
 }
-
-.cardProductMedia {
-    height: 140px;
-}
-
-.cardProductContent {
-    padding: 16px;
-}
-
-.cardProductTitle {
-    margin-bottom: 8px;
-}
-
-.cardProductDescription {
-    color: #6c757d;
-}
-
-.cardProductPrice {
-    font-weight: bold;
-
-}
-
-.cardProductStock {
-    color: #6c757d;
-}
-
-.cardProductActions {
-    display: flex;
-    justify-content: flex-end;
-    padding: 8px;
-    color: "#c55e82";
-} */
