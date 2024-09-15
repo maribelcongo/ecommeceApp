@@ -101,7 +101,7 @@ const Navbar = () => {
 				>
 					<Person sx={{ fontSize: 30 }} />
 				</IconButton>
-
+{/* usuario */}
 				<Menu
 					anchorEl={anchorElUser}
 					open={Boolean(anchorElUser)}
@@ -113,7 +113,7 @@ const Navbar = () => {
 					<MenuItem onClick={handleUserMenuClose}>Cerrar Sesión</MenuItem>
 				</Menu>
 			</Toolbar>
-
+{/* menu hamburgesa */}
 			<Menu
 				anchorEl={anchorElMenu}
 				open={Boolean(anchorElMenu)}
