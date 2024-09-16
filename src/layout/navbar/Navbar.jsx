@@ -24,6 +24,7 @@ import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import logo from "../../assets/encantadaLogo.jpg";
 import "./navbar.css";
+import RegisterForm from "../../components/admin/RegisterForm";
 
 const Navbar = () => {
 	const [anchorElUser, setAnchorElUser] = useState(null);
@@ -101,7 +102,8 @@ const Navbar = () => {
 				>
 					<Person sx={{ fontSize: 30 }} />
 				</IconButton>
-{/* usuario */}
+
+				{/* Menú de usuario */}
 				<Menu
 					anchorEl={anchorElUser}
 					open={Boolean(anchorElUser)}
@@ -113,7 +115,8 @@ const Navbar = () => {
 					<MenuItem onClick={handleUserMenuClose}>Cerrar Sesión</MenuItem>
 				</Menu>
 			</Toolbar>
-{/* menu hamburgesa */}
+
+			{/* Menú de hamburguesa */}
 			<Menu
 				anchorEl={anchorElMenu}
 				open={Boolean(anchorElMenu)}
@@ -195,6 +198,15 @@ const Navbar = () => {
 						Cerrar
 					</Button>
 				</DialogActions>
+			</Dialog>
+
+			{/* Modal de registro */}
+			<Dialog open={openRegister} onClose={handleRegisterClose}>
+				<DialogTitle>Registro</DialogTitle>
+				<DialogContent>
+					<RegisterForm />
+					{/* Formulario de registro */}
+				</DialogContent>
 			</Dialog>
 		</AppBar>
 	);
