@@ -8,9 +8,10 @@ import Carteras from "./pages/Carteras";
 import Billeteras from "./pages/Billeteras";
 import Mochilas from "./pages/Mochilas";
 import Riñoneras from "./pages/Riñoneras";
-import Footer from "./layout/footer/footer";
+
 import PageNotFound from "./pages/PageNotFound";
 import ProductList from "./components/card/ProductList";
+import Footer from "./layout/footer/Footer";
 
 function App() {
 	return (
