@@ -30,13 +30,23 @@
 }
 
 .carousel-home {
-	width: 100%;
+	width: 50%;
 	height: auto;
 	display: block;
+	object-fit: cover;
 }
 
-.carousel-home {
-	object-fit: cover;
-	width: 250px;
-	margin: 10px;
+
+@media (max-width: 768px) {
+	.carousel-box {
+		max-width: 100%;
+	}
+
+	
+
+	.carousel-home {
+		width: 100%;
+		height: auto;
+		margin: 5px 0;
+	}
 }

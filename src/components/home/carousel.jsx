@@ -2,14 +2,14 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
 import "./carousel.css";
 
-import carousel2 from "../../assets/carousel_b.jpg";
-import carousel3 from "../../assets/carousel_c.jpg";
-import carousel4 from "../../assets/carousel_a.jpg";
+import carousel2 from "../../assets/carrusel01.jpg";
+import carousel3 from "../../assets/carrusel02.jpg";
+import carousel4 from "../../assets/carrusel03.jpg";
 const Carousel = () => {
 	const images = [
-		{ src: carousel4, alt: "envio", className: "carousel_img" },
-		{ src: carousel2, alt: "cartel", className: "carousel_img" },
+		{ src: carousel2, alt: "envio", className: "carousel_img" },
 		{ src: carousel3, alt: "cartel", className: "carousel_img" },
+		{ src: carousel4, alt: "cartel", className: "carousel_img" },
 	];
 
 	return (
