@@ -16,7 +16,7 @@ import destacado6Img from "../../assets/mochi4.jpg";
 import destacado7Img from "../../assets/c4.jpg";
 import destacado8Img from "../../assets/ri2home.jpg";
 
-import "./Home.css";
+import "./home.css";
 import CardProduct_home from "../card/CardProduct_home";
 
 const Home = () => {
