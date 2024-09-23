@@ -13,7 +13,7 @@ import {
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { getImageUrl } from "../../../firebase";
 import { useCart } from "../../context/CartContext";
-import "./CardProduct.css";
+import "./cardProduct.css";
 
 const CardProduct = ({ product }) => {
 	const [imageUrl, setImageUrl] = useState("");
