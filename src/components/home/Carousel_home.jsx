@@ -4,7 +4,7 @@ import "@splidejs/splide/dist/css/splide.min.css";
 import carousel1 from "../../assets/carouselb.jpg";
 import carousel2 from "../../assets/carouselc.jpg";
 import carousel3 from "../../assets/carousela.jpg";
-import "./Carousel_home.css";
+import "./carousel_home.css";
 
 const Carousel_home = () => {
 	const images = [
