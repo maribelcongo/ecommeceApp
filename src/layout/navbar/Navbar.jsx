@@ -63,6 +63,7 @@ const Navbar = () => {
 					justifyContent: "space-between",
 					height: 130,
 					background: "#fff",
+					
 				}}
 			>
 				<IconButton
@@ -117,6 +118,7 @@ const Navbar = () => {
 			</Toolbar>
 
 			{/* Menú de hamburguesa */}
+			
 			<Menu
 				anchorEl={anchorElMenu}
 				open={Boolean(anchorElMenu)}
@@ -125,17 +127,17 @@ const Navbar = () => {
 				<MenuItem>
 					<Typography variant="h6">Nuestros Productos</Typography>
 				</MenuItem>
-				<MenuItem onClick={handleMenuClose}>
+				<MenuItem onClick={handleMenuClose} className="menu-item"  >
 					<Link to="/" style={{ textDecoration: "none", color: "#333" }}>
 						Inicio
 					</Link>
 				</MenuItem>
-				<MenuItem onClick={handleMenuClose}>
+				<MenuItem onClick={handleMenuClose} className="menu-item" >
 					<Link to="/todos" style={{ textDecoration: "none", color: "#333" }}>
 						Todos
 					</Link>
 				</MenuItem>
-				<MenuItem onClick={handleMenuClose}>
+				<MenuItem onClick={handleMenuClose} className="menu-item">
 					<Link
 						to="/carteras"
 						style={{ textDecoration: "none", color: "#333" }}
@@ -143,7 +145,7 @@ const Navbar = () => {
 						Carteras
 					</Link>
 				</MenuItem>
-				<MenuItem onClick={handleMenuClose}>
+				<MenuItem onClick={handleMenuClose} className="menu-item">
 					<Link
 						to="/mochilas"
 						style={{ textDecoration: "none", color: "#333" }}
@@ -151,7 +153,7 @@ const Navbar = () => {
 						Mochilas
 					</Link>
 				</MenuItem>
-				<MenuItem onClick={handleMenuClose}>
+				<MenuItem onClick={handleMenuClose} className="menu-item">
 					<Link
 						to="/billeteras"
 						style={{ textDecoration: "none", color: "#333" }}
@@ -159,7 +161,7 @@ const Navbar = () => {
 						Billeteras
 					</Link>
 				</MenuItem>
-				<MenuItem onClick={handleMenuClose}>
+				<MenuItem onClick={handleMenuClose} className="menu-item" >
 					<Link
 						to="/riñoneras"
 						style={{ textDecoration: "none", color: "#333" }}
@@ -167,6 +169,7 @@ const Navbar = () => {
 						Riñoneras
 					</Link>
 				</MenuItem>
+				
 			</Menu>
 
 			{/* Modal de carrito */}

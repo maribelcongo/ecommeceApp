@@ -1,6 +1,34 @@
 .productListContainer {
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
+	grid-template-columns: repeat(4, 1fr); 
 	gap: 20px;
 	margin: 20px;
+	justify-items: center;
+}
+
+
+@media (max-width: 768px) {
+	.productListContainer {
+		grid-template-columns: repeat(2, 1fr); 
+		gap: 10px;
+		margin: 10px;
+		justify-items: center;
+	}
+}
+
+
+@media (max-width: 480px) {
+	.productListContainer {
+		grid-template-columns: 1fr;
+		gap: 10px;
+		margin: 10px;
+		justify-items: center;
+	}
+}
+
+
+.containerProductCard{
+display:flex;
+justify-content:center;
+
 }
