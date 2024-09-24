@@ -9,9 +9,9 @@
 .home-title {
 	font-size: 44px;
 	font-weight: bold;
-	margin-bottom: 20px;
+	margin: 20px;
 	color: #333;
-	text-align: center;
+	text-align:center;
 }
 
 .cards-container {
