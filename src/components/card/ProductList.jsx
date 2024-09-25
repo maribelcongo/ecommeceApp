@@ -26,7 +26,7 @@ const ProductList = () => {
 					q = collection(db, "productos");
 				} else {
 					// Filtra por tipo según la ruta
-					const type = currentPath.substring(1); // Obtiene el tipo de la ruta, por ejemplo, "/carteras" -> "carteras"
+					const type = currentPath.substring(1);
 					q = query(collection(db, "productos"), where("type", "==", type));
 				}
 
