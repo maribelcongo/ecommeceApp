@@ -1,8 +1,8 @@
-// src/components/footer/Footer.jsx
+
 import React from "react";
-import { FaInstagram, FaTwitter, FaFacebook } from "react-icons/fa"; // Importa los iconos de FontAwesome
-import paymentImage from "../../assets/pagos.jpg"; // Importa la imagen de medios de pago
-import "./footer.css"; // Importa el archivo de estilos
+import { FaInstagram, FaTwitter, FaFacebook } from "react-icons/fa"; 
+import paymentImage from "../../assets/pagos.jpg";
+import "./footer.css";
 
 const Footer = () => {
 	return (
@@ -11,9 +11,8 @@ const Footer = () => {
 			<div className="footer-section">
 				<h3>Sobre Nosotros</h3>
 				<p>
-					Somos una tienda especializada en productos de alta calidad. Nuestro
-					objetivo es ofrecer a nuestros clientes una experiencia de compra
-					excepcional.
+					Somos una tienda especializada en productos de alta calidad.
+					
 				</p>
 			</div>
 

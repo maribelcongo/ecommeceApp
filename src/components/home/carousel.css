@@ -2,7 +2,7 @@
 	width: 100%;
 	max-width: 1200px;
 	margin: 0 auto;
-	overflow: hidden;
+	/* overflow: hidden; */
 	position: relative;
 }
 
@@ -13,7 +13,13 @@
 	border-radius: 5px;
 	margin: 0 5px;
 }
-
+@media (max-width: 600px) {
+    .carousel-image {
+        height: 150px; 
+		width: 90%;
+		object-fit: contain;
+    }
+}
 .splide__slide {
 	padding: 0;
 	display: flex;
@@ -24,4 +30,10 @@
 .splide__list {
 	display: flex;
 	gap: 10px;
+}
+
+@media (max-width: 600px) {
+    .splide__arrow {
+        display: none;
+    }
 }

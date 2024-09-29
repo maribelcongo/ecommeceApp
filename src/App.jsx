@@ -11,7 +11,7 @@ import Riñoneras from "./pages/Riñoneras";
 import PageNotFound from "./pages/PageNotFound";
 import ProductList from "./components/card/ProductList";
 import Footer from "./layout/footer/Footer";
-import MyAccount from "./pages/MyAccount"; // Asegúrate de que la ruta sea correcta
+import MyAccount from "./pages/MyAccount"; 
 
 function App() {
 	return (
