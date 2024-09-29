@@ -1,7 +1,7 @@
 // src/pages/PageNotFound.jsx
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./pageNotFound.css"; // Asegúrate de crear este archivo CSS para los estilos
+import "./pageNotFound.css"; 
 
 const PageNotFound = () => {
 	const navigate = useNavigate();
@@ -17,9 +17,8 @@ const PageNotFound = () => {
 	}, [navigate]);
 
 	return (
-		<div className="page-not-found">
-			<h1>404 - Página No Encontrada</h1>
-		</div>
+		<div className="page-not-found"/>
+			
 	);
 };
 

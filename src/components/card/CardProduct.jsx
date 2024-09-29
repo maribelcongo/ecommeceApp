@@ -36,7 +36,7 @@ const CardProduct = ({ product }) => {
             setUser(currentUser); // Actualizar el estado con el usuario actual (o null si se ha cerrado sesión)
         });
         
-        return () => unsubscribe(); // Limpiar la suscripción cuando el componente se desmonte
+        return () => unsubscribe(); 
     }, [auth]);
 
     // Obtener la URL de la imagen del producto
@@ -112,12 +112,12 @@ const CardProduct = ({ product }) => {
                     <Typography
                         variant="h6"
                         sx={{
-                            fontFamily: "Skranji, cursive", // Fuente personalizada
-                            fontSize: "1.5rem", // Tamaño del texto
-                            color: "#c55e82", // Color rosa
-                            fontWeight: "bold", // Negrita
-                            marginBottom: "20px", // Espaciado inferior
-                            textAlign: "center" // Alinear al centro
+                            fontFamily: "Skranji, cursive", 
+                            fontSize: "1.5rem", 
+                            color: "#c55e82",
+                            fontWeight: "bold", 
+                            marginBottom: "20px", 
+                            textAlign: "center" 
                         }}
                     >
                         Cantidad
@@ -128,13 +128,13 @@ const CardProduct = ({ product }) => {
                         value={quantity}
                         onChange={(e) => setQuantity(Number(e.target.value))}
                         InputProps={{
-                            inputProps: { min: 1, max: product.stock }, // Limitar al stock disponible
+                            inputProps: { min: 1, max: product.stock }, 
                         }}
                         sx={{
-                            marginBottom: "20px", // Espaciado inferior
-                            width: "100%", // Ancho completo
+                            marginBottom: "20px", 
+                            width: "100%", 
                             "& .MuiInputBase-root": {
-                                fontFamily: "Skranji, cursive", // Fuente personalizada en el campo de texto
+                                fontFamily: "Skranji, cursive", 
                             }
                         }}
                     />
@@ -143,15 +143,15 @@ const CardProduct = ({ product }) => {
                         onClick={handleAddToCart}
                         variant="contained"
                         sx={{
-                            bgcolor: "#c55e82", // Fondo rosa
+                            bgcolor: "#c55e82", 
                             "&:hover": {
-                                bgcolor: "#b04a6e" // Color más oscuro en hover
+                                bgcolor: "#b04a6e"
                             },
-                            color: "white", // Texto blanco
-                            fontFamily: "Skranji, cursive", // Fuente personalizada
-                            fontWeight: "bold", // Negrita en el botón
-                            textTransform: "none", // Evitar que el texto esté en mayúsculas
-                            padding: "10px 20px", // Espaciado en el botón
+                            color: "white",
+                            fontFamily: "Skranji, cursive", 
+                            fontWeight: "bold", 
+                            textTransform: "none", 
+                            padding: "10px 20px", 
                         }}
                     >
                         Agregar al Carrito

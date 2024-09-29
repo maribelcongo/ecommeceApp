@@ -1,5 +1,4 @@
-
-import React from "react"; 
+import React from "react";  
 import { useAuth } from "../context/AuthContext"; 
 import { useCart } from "../context/CartContext"; 
 import { Box, Typography, Button, Card, CardMedia, CardContent } from "@mui/material";
@@ -35,8 +34,8 @@ const MyAccount = () => {
     const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
     return (
-        <Box sx={{ p: 3 }}>
-            <Typography variant="h4">Mi Cuenta</Typography>
+        <Box sx={{ p: 3, backgroundColor: '#f5f5f5', borderRadius: '8px', boxShadow: 2 }}>
+            <Typography variant="h4" sx={{ color: '#c55e82', fontWeight: 'bold', mb: 2 }}>Mi Cuenta</Typography>
             <Typography variant="h6">Nombre: {currentUser.displayName || currentUser.email}</Typography>
             <Typography variant="h6">Email: {currentUser.email}</Typography>
             
@@ -47,15 +46,15 @@ const MyAccount = () => {
 
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 2 }}>
                         {cart.map((item, index) => (
-                            <Card key={index} sx={{ display: 'flex', alignItems: 'center', padding: 2 }}>
+                            <Card key={index} sx={{ display: 'flex', alignItems: 'center', padding: 2, borderRadius: '8px', boxShadow: 1 }}>
                                 <CardMedia
                                     component="img"
-                                    sx={{ width: 100, height: 100 }}
-                                    image={item.image} // Asegúrate de que 'image' sea la propiedad correcta
+                                    sx={{ width: 100, height: 100, borderRadius: '4px' }}
+                                    image={item.image} 
                                     alt={item.name}
                                 />
                                 <CardContent>
-                                    <Typography variant="h6">{item.name}</Typography>
+                                    <Typography variant="h6" sx={{ fontWeight: 'bold' }}>{item.name}</Typography>
                                     <Typography variant="body1">${item.price.toFixed(2)}</Typography>
                                 </CardContent>
                             </Card>
@@ -66,15 +65,10 @@ const MyAccount = () => {
                 <Typography variant="h6">Tu carrito está vacío.</Typography>
             )}
 
-         
-
-    
-
             {/* Botón para cerrar el formulario */}
             <Button 
                 variant="outlined" 
-                color="primary" 
-                sx={{ mt: 2, ml: 2 }} 
+                sx={{ mt: 2, ml: 2, borderColor: '#c55e82', color: '#c55e82', '&:hover': { borderColor: '#b04a6e', color: '#b04a6e' } }} 
                 onClick={handleClose}
             >
                 Cerrar
