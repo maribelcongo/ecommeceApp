@@ -66,11 +66,11 @@ const Navbar = () => {
 			<Toolbar
 				sx={{
 					display: "flex",
-					flexWrap: "wrap", // Permite que los elementos se envuelvan
-					justifyContent: "space-evenly", // Distribuye el espacio uniformemente
-					height: { xs: 170, sm: 130 }, // Altura ajustada
+					flexWrap: "wrap", 
+					justifyContent: "space-evenly",
+					height: { xs: 170, sm: 130 }, 
 					background: "#fff",
-					alignItems: "center", // Asegura que los elementos estén centrados verticalmente
+					alignItems: "center", 
 				}}
 			>
 				<IconButton
@@ -94,7 +94,7 @@ const Navbar = () => {
 						color: "#c55e82", 
 						fontFamily: 'Skranji, sans-serif'
 					}}>
-						Hola, {currentUser.displayName || currentUser.email}
+						Hola, {currentUser.displayName}
 					</Typography>
 				)}
 

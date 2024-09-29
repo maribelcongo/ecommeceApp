@@ -66,9 +66,7 @@ const MyAccount = () => {
                 <Typography variant="h6">Tu carrito está vacío.</Typography>
             )}
 
-            <Button variant="contained" sx={{ mt: 2 }} onClick={() => {/* Lógica para editar cuenta */}}>
-                Editar Cuenta
-            </Button>
+         
 
     
 
