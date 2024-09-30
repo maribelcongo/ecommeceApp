@@ -1,6 +1,7 @@
 
 import React from "react";
-import { FaInstagram, FaTwitter, FaFacebook } from "react-icons/fa"; 
+import { FaInstagram , FaFacebook } from "react-icons/fa"; 
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import paymentImage from "../../assets/pagos.jpg";
 import "./footer.css";
 
@@ -38,13 +39,13 @@ const Footer = () => {
 						<FaInstagram className="social-icon" />
 					</a>
 					<a
-						href="https://www.twitter.com"
-						target="_blank"
-						rel="noopener noreferrer"
-						aria-label="Twitter"
-					>
-						<FaTwitter className="social-icon" />
-					</a>
+    href="https://www.linkedin.com/in/maribel-congo-379727268"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="LinkedIn"
+>
+    <LinkedInIcon className="social-icon" />
+</a>
 					<a
 						href="https://www.facebook.com"
 						target="_blank"
