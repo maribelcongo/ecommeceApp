@@ -63,7 +63,7 @@ Navega a través de diferentes categorías de productos
 - **Material UI**: Biblioteca de componentes de React que implementa el diseño de Material Design.
 - **Styled Components**: Para el manejo de estilos en componentes de manera efectiva.
 - **React Router**: Para la navegación entre diferentes páginas de la aplicación.
--**css** :para los estilos de la pagaina 
+- **css** :para los estilos de la pagaina 
 
   
 ## Instalación
