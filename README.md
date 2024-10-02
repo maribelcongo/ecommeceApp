@@ -42,6 +42,11 @@ Navega a través de diferentes categorías de productos
   de react-routes al hacaer click las imagenes te dirigen a la ruta seleccionada.
    ![rutas-git](https://github.com/user-attachments/assets/fc58f256-6b90-45fd-b374-7063dc4565fd)
 
+**pagina 404**
+ La página 404 le informa al usuario que la URL a la que intentó acceder no es válida o no está disponible.
+ ![404-git](https://github.com/user-attachments/assets/7a3e6fb9-552a-4eaf-a37a-505fd6c5bbc4)
+
+
  **Footer**
  Diseño adaptable  con links de contacto.
 ![footer-git](https://github.com/user-attachments/assets/ec8f1688-a474-47a3-96f5-d642a9802aa1)
@@ -58,7 +63,7 @@ Navega a través de diferentes categorías de productos
 - **Material UI**: Biblioteca de componentes de React que implementa el diseño de Material Design.
 - **Styled Components**: Para el manejo de estilos en componentes de manera efectiva.
 - **React Router**: Para la navegación entre diferentes páginas de la aplicación.
-
+-**css** :para los estilos de la pagaina 
 
   
 ## Instalación
