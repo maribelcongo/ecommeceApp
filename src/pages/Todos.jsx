@@ -5,7 +5,7 @@ import {
 	getDocs,
 } from "firebase/firestore";
 import CardProduct from "../components/card/CardProduct"; 
-import './Todos.css'; 
+import './todos.css'; 
 
 const db = getFirestore();
 
