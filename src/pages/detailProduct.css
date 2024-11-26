@@ -1,0 +1,90 @@
+.detailProductContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.detailProductCard {
+  display: flex;
+  flex-direction: row;
+  max-width: 1000px;
+  width: 100%;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+/* Imagen del producto */
+.detailProductCard img {
+  width: 300px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  flex: 1;
+  justify-content: space-around;
+}
+
+.cardContent h4 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.cardContent p {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.cardContent .price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.cardContent .stock {
+  font-size: 1.2rem;
+  color: #888;
+  margin-bottom: 20px;
+}
+
+/* Botón de añadir al carrito */
+.cardContent .addToCartButton {
+  background-color: #c55e82;
+  color: white;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cardContent .addToCartButton:hover {
+  background-color: #b04a6e;
+}
+
+/* Estilo para pantallas pequeñas */
+@media (max-width: 768px) {
+  .detailProductContainer {
+    flex-direction: column; /* Cambia el layout a columna en pantallas pequeñas */
+    gap: 10px;
+  }
+
+  .detailProductCard {
+    flex-direction: column; /* Hacemos que los elementos vayan en una columna */
+    width: 90%; /* Hacemos que ocupe el 90% del ancho de la pantalla */
+  }
+
+  .detailProductCard img {
+    width: 100%; /* La imagen ocupará todo el ancho disponible */
+    height: auto;
+  }
+}

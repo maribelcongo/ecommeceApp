@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { getStorage, ref, getDownloadURL } from "firebase/storage"; // Importar ref y getDownloadURL
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -14,24 +14,23 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 };
 
-// Inicializar Firebase
+// Inicializamos Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+
+// Exportar las funciones necesarias
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 export const storage = getStorage(app); // Inicializar el almacenamiento
 
-
-
-
-// Función para obtener la URL de descarga de una imagen
+// Función para obtener la URL de una imagen desde Firebase Storage
 export const getImageUrl = async (imagePath) => {
   try {
-    const imageRef = ref(storage, imagePath); 
+    const imageRef = ref(storage, imagePath);
     const url = await getDownloadURL(imageRef);
     return url;
   } catch (error) {
     console.error("Error al obtener la URL de la imagen:", error);
-    return ""; // Devuelve una cadena vacía si hay un error
+    return "";
   }
 };
