@@ -18,6 +18,8 @@ import MyAccount from "./pages/MyAccount";
 import ProductList from "./components/card/ProductList";
 import OrderConfirmation from "./pages/OrderConfirmation";
 import Cart from "./pages/Cart";
+import Register from "./pages/Register";
+import Login from "./pages/login";
 
 function App() {
   return (
@@ -40,6 +42,8 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/order-confirmation" element={<OrderConfirmation />} />
           <Route path="/carrito" element={<Cart />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="*" element={<PageNotFound />} /> {/* Página 404 */}
         </Routes>
 

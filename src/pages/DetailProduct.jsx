@@ -22,6 +22,7 @@
 //   const navigate = useNavigate();
 //   const { addToCart } = useCart(); // Obtener la función de agregar al carrito
 
+//   // Obtener los detalles del producto
 //   const fetchProductDetails = async (productId) => {
 //     try {
 //       const docRef = doc(db, "productos", productId);
@@ -42,11 +43,11 @@
 //         setImageUrl(url);
 //       } else {
 //         console.log("Producto no encontrado con ID:", productId);
-//         navigate("/not-found");
+//         navigate("/not-found"); // Redirigir a página de no encontrado si no existe el producto
 //       }
 //     } catch (error) {
 //       console.error("Error al obtener los detalles del producto:", error);
-//       navigate("/not-found");
+//       navigate("/not-found"); // Redirigir en caso de error
 //     } finally {
 //       setLoading(false);
 //     }
@@ -66,9 +67,11 @@
 //     return <div>Producto no encontrado</div>;
 //   }
 
+//   // Manejar la acción de agregar al carrito
 //   const handleAddToCart = () => {
 //     const quantity = 1; // Suponiendo que la cantidad es 1, puedes modificarlo si es necesario
 //     addToCart(product, quantity);
+//     navigate("/"); // Redirige al inicio después de agregar al carrito
 //   };
 
 //   return (
@@ -119,8 +122,13 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
 } from "@mui/material";
 import { useCart } from "../context/CartContext"; // Importar el contexto del carrito
+import { useAuth } from "../context/AuthContext"; // Importar el contexto de autenticación
 import "./detailProduct.css";
 
 const db = getFirestore();
@@ -132,6 +140,9 @@ const DetailProduct = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { addToCart } = useCart(); // Obtener la función de agregar al carrito
+  const { currentUser } = useAuth(); // Obtener el usuario actual
+
+  const [openModal, setOpenModal] = useState(false); // Estado para controlar la apertura del modal
 
   // Obtener los detalles del producto
   const fetchProductDetails = async (productId) => {
@@ -180,9 +191,30 @@ const DetailProduct = () => {
 
   // Manejar la acción de agregar al carrito
   const handleAddToCart = () => {
-    const quantity = 1; // Suponiendo que la cantidad es 1, puedes modificarlo si es necesario
-    addToCart(product, quantity);
-    navigate("/"); // Redirige al inicio después de agregar al carrito
+    if (currentUser) {
+      const quantity = 1; // Suponiendo que la cantidad es 1, puedes modificarlo si es necesario
+      addToCart(product, quantity);
+      navigate("/"); // Redirige al inicio después de agregar al carrito
+    } else {
+      setOpenModal(true); // Si el usuario no está logueado, abrir el modal
+    }
+  };
+
+  // Manejar el cierre del modal
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  // Manejar la redirección al login
+  const handleLoginRedirect = () => {
+    navigate("/login");
+    setOpenModal(false);
+  };
+
+  // Manejar la redirección al registro
+  const handleRegisterRedirect = () => {
+    navigate("/register");
+    setOpenModal(false);
   };
 
   return (
@@ -218,6 +250,25 @@ const DetailProduct = () => {
           </Button>
         </CardContent>
       </Card>
+
+      {/* Modal para usuario no autenticado */}
+      <Dialog open={openModal} onClose={handleCloseModal}>
+        <DialogTitle>Inicia sesión o regístrate</DialogTitle>
+        <DialogContent>
+          <Typography variant="body1">
+            Para añadir productos al carrito, necesitas iniciar sesión o
+            registrarte.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleLoginRedirect} color="primary">
+            Iniciar sesión
+          </Button>
+          <Button onClick={handleRegisterRedirect} color="primary">
+            Registrarse
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
