@@ -11,9 +11,13 @@ import Mochilas from "./pages/Mochilas";
 import Riñoneras from "./pages/Riñoneras";
 import DetailProduct from "./pages/DetailProduct";
 import PageNotFound from "./pages/PageNotFound";
+import Checkout from "./pages/Checkout";
+
 import Footer from "./layout/footer/Footer";
 import MyAccount from "./pages/MyAccount";
 import ProductList from "./components/card/ProductList";
+import OrderConfirmation from "./pages/OrderConfirmation";
+import Cart from "./pages/Cart";
 
 function App() {
   return (
@@ -33,6 +37,9 @@ function App() {
           <Route path="/riñoneras" element={<ProductList />} />
           <Route path="/mi-cuenta" element={<MyAccount />} />
           <Route path="/product/:id" element={<DetailProduct />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/order-confirmation" element={<OrderConfirmation />} />
+          <Route path="/carrito" element={<Cart />} />
           <Route path="*" element={<PageNotFound />} /> {/* Página 404 */}
         </Routes>
 
