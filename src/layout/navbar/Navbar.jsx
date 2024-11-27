@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import {
   AppBar,
@@ -8,9 +7,10 @@ import {
   Badge,
   Menu,
   MenuItem,
+  Button,
 } from "@mui/material";
 import { ShoppingCart, Person, Menu as MenuIcon } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
 import logo from "../../assets/encantadaLogo.jpg";
@@ -20,6 +20,7 @@ import LoginForm from "../../components/admin/LoginForm";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElMenu, setAnchorElMenu] = useState(null);
 
@@ -35,6 +36,9 @@ const Navbar = () => {
     (acc, item) => acc + Number(item.quantity),
     0
   );
+
+  // Verificar si estamos en la página de inicio
+  const isHomePage = location.pathname === "/";
 
   return (
     <AppBar position="static" sx={{ backgroundColor: "#333" }}>
@@ -58,8 +62,11 @@ const Navbar = () => {
           <MenuIcon sx={{ fontSize: 30 }} />
         </IconButton>
 
+        {/* Logo con enlace al inicio */}
         <Typography component="div" sx={{ flexGrow: 1, textAlign: "center" }}>
-          <img src={logo} alt="Logo" style={{ height: 85 }} />
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <img src={logo} alt="Logo" style={{ height: 85 }} />
+          </Link>
         </Typography>
 
         {currentUser && (
@@ -168,21 +175,6 @@ const Navbar = () => {
         </MenuItem>
         <div>
           <MenuItem
-            onClick={handleMenuClose}
-            className="menu-item"
-            sx={{
-              "&:hover": {
-                backgroundColor: "#f8bbd0",
-                fontFamily: "'Spicy Rice', cursive",
-              },
-              fontFamily: "'Spicy Rice', cursive",
-            }}
-          >
-            <Link to="/" style={{ textDecoration: "none", color: "#333" }}>
-              Inicio
-            </Link>
-          </MenuItem>
-          <MenuItem
             onClick={() => {
               handleMenuClose();
               navigate("/Todos");
@@ -245,7 +237,7 @@ const Navbar = () => {
           <MenuItem
             onClick={() => {
               handleMenuClose();
-              navigate("/rioñeras");
+              navigate("/riñoneras");
             }}
             sx={{
               "&:hover": {
@@ -259,6 +251,20 @@ const Navbar = () => {
           </MenuItem>
         </div>
       </Menu>
+
+      {!isHomePage && (
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            zIndex: 1,
+            backgroundColor: "#c55e82",
+          }}
+          onClick={() => navigate("/")}
+        >
+          Inicio
+        </Button>
+      )}
     </AppBar>
   );
 };
