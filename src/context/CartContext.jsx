@@ -1,4 +1,5 @@
 // import React, { createContext, useState, useContext, useEffect } from "react";
+// import { saveOrder } from "../../firebase"; // Importa la función para guardar la orden en Firestore
 
 // // Creamos el contexto
 // const CartContext = createContext();
@@ -62,6 +63,35 @@
 //     localStorage.removeItem("cart"); // Eliminar el carrito del localStorage
 //   };
 
+//   // Función de checkout para finalizar la compra
+//   const checkout = async (userInfo) => {
+//     try {
+//       // Crear la orden con la información del usuario y el carrito
+//       const orderDetails = {
+//         userId: userInfo.id, // ID del usuario (suponiendo que ya lo tienes)
+//         name: userInfo.name,
+//         email: userInfo.email,
+//         address: userInfo.address,
+//         products: cart, // Productos del carrito
+//         total: cart.reduce((acc, item) => acc + item.price * item.quantity, 0), // Total de la compra
+//         createdAt: new Date(), // Fecha de la compra
+//       };
+
+//       // Guarda la orden en Firestore
+//       const orderId = await saveOrder(orderDetails);
+
+//       if (orderId) {
+//         // Limpiar el carrito después de la compra
+//         clearCart();
+//       }
+
+//       return orderId; // Retorna el ID de la orden guardada
+//     } catch (error) {
+//       console.error("Error al crear la orden:", error);
+//       return null; // Retorna null si ocurre un error
+//     }
+//   };
+
 //   // Al cambiar el carrito, guardamos el estado actualizado en localStorage
 //   useEffect(() => {
 //     saveCartToLocalStorage(cart);
@@ -69,7 +99,7 @@
 
 //   return (
 //     <CartContext.Provider
-//       value={{ cart, addToCart, removeFromCart, clearCart }}
+//       value={{ cart, addToCart, removeFromCart, clearCart, checkout }}
 //     >
 //       {children}
 //     </CartContext.Provider>
@@ -84,15 +114,24 @@ import { saveOrder } from "../../firebase"; // Importa la función para guardar 
 // Creamos el contexto
 const CartContext = createContext();
 
-// Función para obtener el carrito desde localStorage
+// Función para obtener el carrito desde localStorage con manejo de errores
 const getCartFromLocalStorage = () => {
-  const storedCart = localStorage.getItem("cart");
-  return storedCart ? JSON.parse(storedCart) : [];
+  try {
+    const storedCart = localStorage.getItem("cart");
+    return storedCart ? JSON.parse(storedCart) : [];
+  } catch (error) {
+    console.error("Error al leer el carrito desde localStorage:", error);
+    return [];
+  }
 };
 
 // Función para guardar el carrito en localStorage
 const saveCartToLocalStorage = (cart) => {
-  localStorage.setItem("cart", JSON.stringify(cart));
+  try {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  } catch (error) {
+    console.error("Error al guardar el carrito en localStorage:", error);
+  }
 };
 
 export const CartProvider = ({ children }) => {
