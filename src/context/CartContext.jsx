@@ -1,4 +1,85 @@
+// import React, { createContext, useState, useContext, useEffect } from "react";
+
+// // Creamos el contexto
+// const CartContext = createContext();
+
+// // Función para obtener el carrito desde localStorage
+// const getCartFromLocalStorage = () => {
+//   const storedCart = localStorage.getItem("cart");
+//   return storedCart ? JSON.parse(storedCart) : [];
+// };
+
+// // Función para guardar el carrito en localStorage
+// const saveCartToLocalStorage = (cart) => {
+//   localStorage.setItem("cart", JSON.stringify(cart));
+// };
+
+// export const CartProvider = ({ children }) => {
+//   // Intentamos obtener el carrito del localStorage al iniciar
+//   const [cart, setCart] = useState(getCartFromLocalStorage());
+
+//   // Esta función agrega un producto al carrito
+//   const addToCart = (product, quantity) => {
+//     const quantityNumber = Number(quantity);
+
+//     // Verificar si el producto ya existe en el carrito
+//     const existingProductIndex = cart.findIndex(
+//       (item) => item.id === product.id
+//     );
+//     let updatedCart;
+
+//     if (existingProductIndex !== -1) {
+//       // Si el producto ya está en el carrito, actualizar la cantidad
+//       const updatedProduct = {
+//         ...cart[existingProductIndex],
+//         quantity: cart[existingProductIndex].quantity + quantityNumber,
+//       };
+
+//       updatedCart = [
+//         ...cart.slice(0, existingProductIndex),
+//         updatedProduct,
+//         ...cart.slice(existingProductIndex + 1),
+//       ];
+//     } else {
+//       // Si no existe, agregar el producto al carrito
+//       updatedCart = [...cart, { ...product, quantity: quantityNumber }];
+//     }
+
+//     setCart(updatedCart);
+//     saveCartToLocalStorage(updatedCart); // Guardamos en localStorage
+//   };
+
+//   // Esta función elimina un producto del carrito
+//   const removeFromCart = (productId) => {
+//     const updatedCart = cart.filter((item) => item.id !== productId);
+//     setCart(updatedCart);
+//     saveCartToLocalStorage(updatedCart); // Guardamos en localStorage
+//   };
+
+//   // Esta función vacía el carrito
+//   const clearCart = () => {
+//     setCart([]); // Limpiar el estado de React
+//     localStorage.removeItem("cart"); // Eliminar el carrito del localStorage
+//   };
+
+//   // Al cambiar el carrito, guardamos el estado actualizado en localStorage
+//   useEffect(() => {
+//     saveCartToLocalStorage(cart);
+//   }, [cart]);
+
+//   return (
+//     <CartContext.Provider
+//       value={{ cart, addToCart, removeFromCart, clearCart }}
+//     >
+//       {children}
+//     </CartContext.Provider>
+//   );
+// };
+
+// // Hook personalizado para usar el carrito
+// export const useCart = () => useContext(CartContext);
 import React, { createContext, useState, useContext, useEffect } from "react";
+import { saveOrder } from "../../firebase"; // Importa la función para guardar la orden en Firestore
 
 // Creamos el contexto
 const CartContext = createContext();
@@ -22,7 +103,28 @@ export const CartProvider = ({ children }) => {
   const addToCart = (product, quantity) => {
     const quantityNumber = Number(quantity);
 
-    const updatedCart = [...cart, { ...product, quantity: quantityNumber }];
+    // Verificar si el producto ya existe en el carrito
+    const existingProductIndex = cart.findIndex(
+      (item) => item.id === product.id
+    );
+    let updatedCart;
+
+    if (existingProductIndex !== -1) {
+      // Si el producto ya está en el carrito, actualizar la cantidad
+      const updatedProduct = {
+        ...cart[existingProductIndex],
+        quantity: cart[existingProductIndex].quantity + quantityNumber,
+      };
+
+      updatedCart = [
+        ...cart.slice(0, existingProductIndex),
+        updatedProduct,
+        ...cart.slice(existingProductIndex + 1),
+      ];
+    } else {
+      // Si no existe, agregar el producto al carrito
+      updatedCart = [...cart, { ...product, quantity: quantityNumber }];
+    }
 
     setCart(updatedCart);
     saveCartToLocalStorage(updatedCart); // Guardamos en localStorage
@@ -31,9 +133,43 @@ export const CartProvider = ({ children }) => {
   // Esta función elimina un producto del carrito
   const removeFromCart = (productId) => {
     const updatedCart = cart.filter((item) => item.id !== productId);
-
     setCart(updatedCart);
     saveCartToLocalStorage(updatedCart); // Guardamos en localStorage
+  };
+
+  // Esta función vacía el carrito
+  const clearCart = () => {
+    setCart([]); // Limpiar el estado de React
+    localStorage.removeItem("cart"); // Eliminar el carrito del localStorage
+  };
+
+  // Función de checkout para finalizar la compra
+  const checkout = async (userInfo) => {
+    try {
+      // Crear la orden con la información del usuario y el carrito
+      const orderDetails = {
+        userId: userInfo.id, // ID del usuario (suponiendo que ya lo tienes)
+        name: userInfo.name,
+        email: userInfo.email,
+        address: userInfo.address,
+        products: cart, // Productos del carrito
+        total: cart.reduce((acc, item) => acc + item.price * item.quantity, 0), // Total de la compra
+        createdAt: new Date(), // Fecha de la compra
+      };
+
+      // Guarda la orden en Firestore
+      const orderId = await saveOrder(orderDetails);
+
+      if (orderId) {
+        // Limpiar el carrito después de la compra
+        clearCart();
+      }
+
+      return orderId; // Retorna el ID de la orden guardada
+    } catch (error) {
+      console.error("Error al crear la orden:", error);
+      return null; // Retorna null si ocurre un error
+    }
   };
 
   // Al cambiar el carrito, guardamos el estado actualizado en localStorage
@@ -42,7 +178,9 @@ export const CartProvider = ({ children }) => {
   }, [cart]);
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <CartContext.Provider
+      value={{ cart, addToCart, removeFromCart, clearCart, checkout }}
+    >
       {children}
     </CartContext.Provider>
   );

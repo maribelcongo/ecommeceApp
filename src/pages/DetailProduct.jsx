@@ -113,9 +113,17 @@ const DetailProduct = () => {
           alt={product.name || "Imagen del producto"}
         />
         <CardContent className="cardContent">
-          <Typography variant="h4" component="div">
+          <Typography
+            variant="h4"
+            component="div"
+            sx={{
+              fontFamily: "'Skranji', sans-serif",
+              fontWeight: "bold",
+            }}
+          >
             {product.name}
           </Typography>
+
           <Typography variant="body1" color="text.secondary">
             {product.description}
           </Typography>
@@ -127,9 +135,15 @@ const DetailProduct = () => {
           </Typography>
 
           <Button
+            className="btn_add_card"
             variant="contained"
-            color="primary"
-            style={{ marginTop: "10px" }}
+            style={{
+              backgroundColor: "#c55e82",
+              padding: "8px 16px",
+              fontSize: "14px",
+              marginTop: "10px",
+              width: "200px",
+            }}
             onClick={handleAddToCart}
           >
             Añadir al carrito
@@ -138,19 +152,26 @@ const DetailProduct = () => {
       </Card>
 
       {/* Modal para usuario no autenticado */}
-      <Dialog open={openModal} onClose={handleCloseModal}>
+      <Dialog open={openModal} onClose={handleCloseModal} className="modal">
         <DialogTitle>Inicia sesión o regístrate</DialogTitle>
         <DialogContent>
-          <Typography variant="body1">
-            Para añadir productos al carrito, necesitas iniciar sesión o
-            registrarte.
+          <Typography variant="body1" align="center">
+            Para poder añadir productos al carrito
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleLoginRedirect} color="primary">
+          <Button
+            onClick={handleLoginRedirect}
+            color="primary"
+            className="modalButton"
+          >
             Iniciar sesión
           </Button>
-          <Button onClick={handleRegisterRedirect} color="primary">
+          <Button
+            onClick={handleRegisterRedirect}
+            color="primary"
+            className="modalButton"
+          >
             Registrarse
           </Button>
         </DialogActions>

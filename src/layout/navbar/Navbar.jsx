@@ -8,6 +8,7 @@ import {
   Menu,
   MenuItem,
   Button,
+  Box,
 } from "@mui/material";
 import { ShoppingCart, Person, Menu as MenuIcon } from "@mui/icons-material";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -15,8 +16,6 @@ import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
 import logo from "../../assets/encantadaLogo.jpg";
 import "./navbar.css";
-import RegisterForm from "../../components/admin/RegisterForm";
-import LoginForm from "../../components/admin/LoginForm";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -41,7 +40,7 @@ const Navbar = () => {
   const isHomePage = location.pathname === "/";
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#333" }}>
+    <AppBar position="static" sx={{ backgroundColor: "#fff" }}>
       <Toolbar
         sx={{
           display: "flex",
@@ -52,6 +51,7 @@ const Navbar = () => {
           alignItems: "center",
         }}
       >
+        {/* Menú de hamburguesa */}
         <IconButton
           edge="start"
           color="inherit"
@@ -69,24 +69,11 @@ const Navbar = () => {
           </Link>
         </Typography>
 
-        {currentUser && (
-          <Typography
-            className="saludo"
-            sx={{
-              marginRight: 2,
-              color: "#c55e82",
-              fontFamily: "Skranji, sans-serif",
-            }}
-          >
-            Hola, {currentUser.displayName}
-          </Typography>
-        )}
-
-        {/* Ícono de carrito */}
+        {/* Sección de carrito */}
         <IconButton
           color="inherit"
           sx={{ color: "#c55e82" }}
-          onClick={() => navigate("/carrito")} // Redirigir al carrito
+          onClick={() => navigate("/carrito")}
         >
           <Badge
             badgeContent={cartItemsCount}
@@ -97,6 +84,7 @@ const Navbar = () => {
           </Badge>
         </IconButton>
 
+        {/* Menú de usuario */}
         <IconButton
           edge="end"
           color="inherit"
@@ -107,14 +95,14 @@ const Navbar = () => {
           <Person sx={{ fontSize: 30 }} />
         </IconButton>
 
-        {/* Menú de usuario */}
+        {/* Menú de opciones de usuario */}
         <Menu
           anchorEl={anchorElUser}
           open={Boolean(anchorElUser)}
           onClose={handleUserMenuClose}
         >
           {!currentUser ? (
-            <>
+            <div>
               <MenuItem
                 onClick={() => {
                   handleUserMenuClose();
@@ -131,9 +119,9 @@ const Navbar = () => {
               >
                 Registrarse
               </MenuItem>
-            </>
+            </div>
           ) : (
-            <>
+            <div>
               <MenuItem
                 onClick={() => {
                   handleUserMenuClose();
@@ -150,7 +138,7 @@ const Navbar = () => {
               >
                 Cerrar Sesión
               </MenuItem>
-            </>
+            </div>
           )}
         </Menu>
       </Toolbar>
@@ -187,7 +175,7 @@ const Navbar = () => {
               fontFamily: "'Spicy Rice', cursive",
             }}
           >
-            Todos
+            ver Todos los productos
           </MenuItem>
           <MenuItem
             onClick={() => {
@@ -252,19 +240,40 @@ const Navbar = () => {
         </div>
       </Menu>
 
-      {!isHomePage && (
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{
-            zIndex: 1,
-            backgroundColor: "#c55e82",
-          }}
-          onClick={() => navigate("/")}
-        >
-          Inicio
-        </Button>
-      )}
+      {/* Saludo y botón de inicio dentro de un solo div */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          textAlign: "center",
+          // marginTop: 1,
+          backgroundColor: "#fff",
+          padding: "12px 0",
+          fontFamily: "'Skranji', sans-serif",
+          color: "#121212",
+          margin: "15px",
+        }}
+      >
+        {currentUser && (
+          <Typography variant="h6">Hola, {currentUser.displayName}</Typography>
+        )}
+
+        {/* Botón de Inicio solo si no estamos en la página de inicio */}
+        {!isHomePage && (
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{
+              zIndex: 1,
+              backgroundColor: "#c55e82",
+              marginTop: 1,
+            }}
+            onClick={() => navigate("/")}
+          >
+            Inicio
+          </Button>
+        )}
+      </Box>
     </AppBar>
   );
 };

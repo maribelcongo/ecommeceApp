@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, TextField, Typography, Box, Container } from "@mui/material";
 import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
@@ -20,9 +20,37 @@ const Login = () => {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <Typography variant="h4">Iniciar Sesión</Typography>
-      <form onSubmit={handleSubmit} style={{ marginTop: "20px" }}>
+    <Container
+      maxWidth="xs"
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "100vh", // Asegura que el formulario esté centrado verticalmente
+      }}
+    >
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{
+          width: "100%",
+          padding: "20px",
+          display: "flex",
+          flexDirection: "column",
+          gap: 2, // Espaciado entre los elementos del formulario
+          backgroundColor: "background.paper",
+          borderRadius: "8px",
+          boxShadow: 3, // Sombra para darle un poco de profundidad
+        }}
+      >
+        <Typography
+          variant="h4"
+          align="center"
+          fontFamily="Skranji"
+          gutterBottom
+        >
+          Iniciar Sesión
+        </Typography>
         <TextField
           label="Email"
           type="email"
@@ -30,6 +58,7 @@ const Login = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          variant="outlined"
         />
         <TextField
           label="Contraseña"
@@ -38,18 +67,23 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          style={{ marginTop: "20px" }}
+          variant="outlined"
         />
         <Button
           type="submit"
           variant="contained"
           color="primary"
-          style={{ marginTop: "20px" }}
+          sx={{
+            padding: "12px 0",
+            fontSize: "16px",
+            fontWeight: "bold",
+            background: "#c55e82",
+          }}
         >
           Iniciar Sesión
         </Button>
-      </form>
-    </div>
+      </Box>
+    </Container>
   );
 };
 

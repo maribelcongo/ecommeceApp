@@ -12,19 +12,33 @@ const Checkout = () => {
     address: "",
   });
 
+  // Manejar el cambio de los campos del formulario
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserInfo({ ...userInfo, [name]: value });
   };
 
+  // Manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Llamamos a la función de checkout y pasamos la información del usuario
-    const orderId = await checkout(userInfo);
+    // Verificar si los campos del usuario están completos
+    if (!userInfo.name || !userInfo.email || !userInfo.address) {
+      alert("Por favor completa todos los campos del formulario.");
+      return;
+    }
+
+    // Verificar si el carrito tiene productos
+    if (cart.length === 0) {
+      alert("El carrito está vacío.");
+      return;
+    }
+
+    // Llamamos a la función de checkout y pasamos la información del usuario y el carrito
+    const orderId = await checkout(userInfo, cart);
 
     if (orderId) {
-      // Redirigimos a la página de confirmación de la orden
+      // Redirigimos a la página de confirmación de la orden con el ID de la orden
       navigate(`/order-confirmation/${orderId}`);
     }
   };
