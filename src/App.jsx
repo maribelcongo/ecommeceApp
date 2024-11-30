@@ -16,11 +16,14 @@ import OrderConfirmation from "./pages/OrderConfirmation";
 import Cart from "./pages/Cart";
 import Register from "./pages/Register";
 import ProtectedRoute from "./context/ProtectedRoute";
+import MyOrders from "./pages/MyOrders";
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
+    <Router>
+      {" "}
+      <AuthProvider>
+        {" "}
         <div className="app-container">
           <SlideInfinito />
           <Navbar />
@@ -36,12 +39,22 @@ function App() {
               {/* Rutas públicas */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+
               {/* Rutas protegidas */}
               <Route
                 path="/mi-cuenta"
                 element={
                   <ProtectedRoute>
                     <MyAccount />
+                  </ProtectedRoute>
+                }
+              />
+              {/* Ruta para ver las órdenes */}
+              <Route
+                path="/ordenes"
+                element={
+                  <ProtectedRoute>
+                    <MyOrders />
                   </ProtectedRoute>
                 }
               />
@@ -74,8 +87,8 @@ function App() {
           </main>
           <Footer />
         </div>
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 

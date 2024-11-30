@@ -1,0 +1,68 @@
+.orderContent {
+  width: 80%;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: "Arial", sans-serif;
+}
+
+.orderContent h1 {
+  color: #c55e82;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-family: "Skranji", sans-serif;
+}
+
+.orderContent p {
+  color: #333;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.orderContent p strong {
+  font-weight: bold;
+  color: #b04a6e;
+}
+
+.orderContent ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.orderContent li {
+  background-color: #fff;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.orderContent li span {
+  font-size: 1rem;
+  color: #555;
+}
+
+.orderContent .totalAmount {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: #c55e82;
+  font-weight: bold;
+}
+
+.orderContent .loadingMessage,
+.orderContent .errorMessage {
+  color: #555;
+  text-align: center;
+  font-size: 1.1rem;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}

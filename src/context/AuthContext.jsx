@@ -6,18 +6,22 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { useNavigate } from "react-router-dom"; // Importar useNavigate
+import { useCart } from "../context/CartContext"; // Importar el contexto del carrito
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const { clearCart } = useCart(); // Obtener la función para vaciar el carrito
   const [currentUser, setCurrentUser] = useState(null);
+  const navigate = useNavigate();
 
   // Este useEffect escucha los cambios de autenticación del usuario
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
     });
-    return () => unsubscribe(); // Limpia el listener cuando el componente se desmonte
+    return () => unsubscribe();
   }, []);
 
   // Función de login
@@ -28,7 +32,7 @@ export const AuthProvider = ({ children }) => {
         email,
         password
       );
-      setCurrentUser(userCredential.user); // Actualiza el estado con el usuario autenticado
+      setCurrentUser(userCredential.user);
     } catch (error) {
       console.error("Error en el login:", error);
       throw error;
@@ -43,7 +47,7 @@ export const AuthProvider = ({ children }) => {
         email,
         password
       );
-      setCurrentUser(userCredential.user); // Actualiza el estado con el nuevo usuario registrado
+      setCurrentUser(userCredential.user);
     } catch (error) {
       console.error("Error en el registro:", error);
       throw error;
@@ -53,7 +57,9 @@ export const AuthProvider = ({ children }) => {
   // Función para logout
   const logout = async () => {
     await signOut(auth);
-    setCurrentUser(null); // Limpiar el estado cuando el usuario se cierra sesión
+    setCurrentUser(null);
+    clearCart();
+    navigate("/");
   };
 
   return (

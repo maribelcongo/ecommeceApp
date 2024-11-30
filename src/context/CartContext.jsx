@@ -66,6 +66,17 @@ export const CartProvider = ({ children }) => {
     saveCartToLocalStorage(updatedCart); // Guardamos en localStorage
   };
 
+  // Función para actualizar la cantidad de un producto en el carrito
+  const updateQuantity = (productId, change) => {
+    const updatedCart = cart.map((item) =>
+      item.id === productId
+        ? { ...item, quantity: Math.max(1, item.quantity + change) } // Aseguramos que la cantidad no baje de 1
+        : item
+    );
+    setCart(updatedCart);
+    saveCartToLocalStorage(updatedCart); // Guardamos en localStorage
+  };
+
   // Esta función vacía el carrito
   const clearCart = () => {
     setCart([]); // Limpiar el estado de React
@@ -108,7 +119,14 @@ export const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, clearCart, checkout }}
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        clearCart,
+        checkout,
+      }}
     >
       {children}
     </CartContext.Provider>
@@ -117,3 +135,122 @@ export const CartProvider = ({ children }) => {
 
 // Hook personalizado para usar el carrito
 export const useCart = () => useContext(CartContext);
+// -------------------------------------------------------------------------------------------------
+// import React, { createContext, useContext, useState, useEffect } from "react";
+// import { saveOrder } from "../../firebase";
+
+// const CartContext = createContext();
+
+// const getCartFromLocalStorage = () => {
+//   try {
+//     const storedCart = localStorage.getItem("cart");
+//     return storedCart ? JSON.parse(storedCart) : [];
+//   } catch (error) {
+//     console.error("Error al leer el carrito desde localStorage:", error);
+//     return [];
+//   }
+// };
+
+// const saveCartToLocalStorage = (cart) => {
+//   try {
+//     localStorage.setItem("cart", JSON.stringify(cart));
+//   } catch (error) {
+//     console.error("Error al guardar el carrito en localStorage:", error);
+//   }
+// };
+
+// export const CartProvider = ({ children }) => {
+//   const [cart, setCart] = useState(getCartFromLocalStorage());
+
+//   const addToCart = (product, quantity) => {
+//     const quantityNumber = Number(quantity);
+//     const existingProductIndex = cart.findIndex(
+//       (item) => item.id === product.id
+//     );
+//     let updatedCart;
+
+//     if (existingProductIndex !== -1) {
+//       const updatedProduct = {
+//         ...cart[existingProductIndex],
+//         quantity: cart[existingProductIndex].quantity + quantityNumber,
+//       };
+
+//       updatedCart = [
+//         ...cart.slice(0, existingProductIndex),
+//         updatedProduct,
+//         ...cart.slice(existingProductIndex + 1),
+//       ];
+//     } else {
+//       updatedCart = [...cart, { ...product, quantity: quantityNumber }];
+//     }
+
+//     setCart(updatedCart);
+//     saveCartToLocalStorage(updatedCart);
+//   };
+
+//   const removeFromCart = (productId) => {
+//     const updatedCart = cart.filter((item) => item.id !== productId);
+//     setCart(updatedCart);
+//     saveCartToLocalStorage(updatedCart);
+//   };
+
+//   const updateQuantity = (productId, change) => {
+//     const updatedCart = cart.map((item) =>
+//       item.id === productId
+//         ? { ...item, quantity: Math.max(1, item.quantity + change) }
+//         : item
+//     );
+//     setCart(updatedCart);
+//     saveCartToLocalStorage(updatedCart);
+//   };
+
+//   const clearCart = () => {
+//     setCart([]); // Limpiar el carrito en el estado
+//     localStorage.removeItem("cart"); // Eliminar el carrito de localStorage
+//   };
+
+//   const checkout = async (userInfo) => {
+//     try {
+//       const orderDetails = {
+//         userId: userInfo.id,
+//         name: userInfo.name,
+//         email: userInfo.email,
+//         address: userInfo.address,
+//         products: cart,
+//         total: cart.reduce((acc, item) => acc + item.price * item.quantity, 0),
+//         createdAt: new Date(),
+//       };
+
+//       const orderId = await saveOrder(orderDetails);
+//       if (orderId) {
+//         clearCart();
+//       }
+
+//       return orderId;
+//     } catch (error) {
+//       console.error("Error al crear la orden:", error);
+//       return null;
+//     }
+//   };
+
+//   useEffect(() => {
+//     saveCartToLocalStorage(cart);
+//   }, [cart]);
+
+//   return (
+//     <CartContext.Provider
+//       value={{
+//         cart,
+//         addToCart,
+//         removeFromCart,
+//         updateQuantity,
+//         clearCart,
+//         checkout,
+//       }}
+//     >
+//       {children}
+//     </CartContext.Provider>
+//   );
+// };
+
+// export const useCart = () => useContext(CartContext);

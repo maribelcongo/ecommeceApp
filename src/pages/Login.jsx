@@ -26,7 +26,7 @@ const Login = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "100vh", // Asegura que el formulario esté centrado verticalmente
+        minHeight: "100vh",
       }}
     >
       <Box
@@ -37,10 +37,10 @@ const Login = () => {
           padding: "20px",
           display: "flex",
           flexDirection: "column",
-          gap: 2, // Espaciado entre los elementos del formulario
+          gap: 2,
           backgroundColor: "background.paper",
           borderRadius: "8px",
-          boxShadow: 3, // Sombra para darle un poco de profundidad
+          boxShadow: 3,
         }}
       >
         <Typography

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useCart } from "../context/CartContext"; // Usamos el hook del carrito
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, TextField, Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
@@ -44,8 +44,19 @@ const Checkout = () => {
   };
 
   return (
-    <div>
-      <Typography variant="h4">Checkout</Typography>
+    <Box
+      sx={{
+        maxWidth: 600,
+        margin: "0 auto",
+        padding: 3,
+        backgroundColor: "#f5f5f5",
+        borderRadius: 2,
+        marginTop: 5,
+      }}
+    >
+      <Typography variant="h4" sx={{ marginBottom: 3, textAlign: "center" }}>
+        Checkout
+      </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
           label="Nombre"
@@ -54,6 +65,7 @@ const Checkout = () => {
           onChange={handleInputChange}
           fullWidth
           required
+          sx={{ marginBottom: 2 }}
         />
         <TextField
           label="Email"
@@ -62,6 +74,7 @@ const Checkout = () => {
           onChange={handleInputChange}
           fullWidth
           required
+          sx={{ marginBottom: 2 }}
         />
         <TextField
           label="Dirección"
@@ -70,12 +83,26 @@ const Checkout = () => {
           onChange={handleInputChange}
           fullWidth
           required
+          sx={{ marginBottom: 2 }}
         />
-        <Button type="submit" variant="contained" color="primary">
-          Finalizar Compra
-        </Button>
+        <Box sx={{ textAlign: "center", marginTop: 3 }}>
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{
+              backgroundColor: "#c55e82",
+              padding: "10px 20px",
+              fontSize: "16px",
+              "&:hover": {
+                backgroundColor: "#d81b60",
+              },
+            }}
+          >
+            Finalizar Compra
+          </Button>
+        </Box>
       </form>
-    </div>
+    </Box>
   );
 };
 

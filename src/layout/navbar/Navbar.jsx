@@ -240,7 +240,6 @@ const Navbar = () => {
         </div>
       </Menu>
 
-      {/* Saludo y botón de inicio dentro de un solo div */}
       <Box
         sx={{
           display: "flex",
@@ -255,7 +254,7 @@ const Navbar = () => {
         }}
       >
         {currentUser && (
-          <Typography variant="h6">Hola, {currentUser.displayName}</Typography>
+          <Typography variant="h6">Hola, {currentUser.name}</Typography>
         )}
 
         {/* Botón de Inicio solo si no estamos en la página de inicio */}

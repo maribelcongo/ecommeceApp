@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"; // Agregamos useHistory para redirigir después de la confirmación
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../firebase"; // Asegúrate de que esto esté apuntando correctamente a tu archivo de configuración de Firebase
-import { useCart } from "../context/CartContext"; // Importamos el contexto de carrito
+import { useParams } from "react-router-dom";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase";
+import { useCart } from "../context/CartContext";
+
+import "./OrderConfirmation.css";
 
 const OrderConfirmation = () => {
-  const { orderId } = useParams(); // Obtén el orderId desde la URL
+  const { orderId } = useParams();
   const [orderDetails, setOrderDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const { clearCart } = useCart(); // Obtén la función clearCart desde el contexto
@@ -27,6 +29,13 @@ const OrderConfirmation = () => {
             price: parseFloat(product.price), // Convertimos el precio a número
           }));
           setOrderDetails(data); // Establecemos los datos de la orden en el estado
+
+          // Actualizamos el estado de la orden a "finalizada" en Firebase
+          await updateDoc(orderRef, {
+            status: "finalizada",
+            completedAt: new Date(), // Fecha de finalización
+          });
+
           clearCart(); // Vaciar el carrito cuando la orden se haya procesado
         } else {
           throw new Error("La orden no existe.");
@@ -34,7 +43,7 @@ const OrderConfirmation = () => {
       } catch (error) {
         console.error("Error al obtener los detalles de la orden:", error);
       } finally {
-        setLoading(false); // Terminamos el proceso de carga, independientemente de si fue exitoso o no
+        setLoading(false);
       }
     };
 
@@ -42,24 +51,35 @@ const OrderConfirmation = () => {
   }, [orderId, clearCart]); // Dependemos de 'orderId' para volver a ejecutar el efecto
 
   if (loading) {
-    return <div>Cargando detalles de la orden...</div>;
+    return (
+      <div className="loadingMessage">Cargando detalles de la orden...</div>
+    );
   }
 
   if (!orderDetails) {
-    return <div>No se encontraron detalles de la orden.</div>;
+    return (
+      <div className="errorMessage">
+        No se encontraron detalles de la orden.
+      </div>
+    );
   }
 
   return (
     <div className="orderContent">
       <h1>Confirmación de Orden</h1>
       <p>¡Gracias por tu compra, {orderDetails.name}!</p>
-      <p>Tu ID de orden es: {orderId}</p>
-      <p>Total: ${orderDetails.total}</p>
+      <p>
+        Tu ID de orden es: <strong>{orderId}</strong>
+      </p>
+      <div className="totalAmount">Total: ${orderDetails.total}</div>
       <p>Productos comprados:</p>
       <ul>
         {orderDetails.products.map((product) => (
           <li key={product.id}>
-            {product.name} - {product.quantity} x ${product.price}
+            <span>{product.name}</span> -{" "}
+            <span>
+              {product.quantity} x ${product.price}
+            </span>
           </li>
         ))}
       </ul>

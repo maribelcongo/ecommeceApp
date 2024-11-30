@@ -14,8 +14,8 @@ import { db } from "../../firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 
 const MyAccount = () => {
-  const { currentUser } = useAuth(); // Obtenemos el usuario actual desde el contexto de autenticación
-  const { cart } = useCart(); // Obtenemos el carrito desde el contexto de carrito
+  const { currentUser } = useAuth();
+  const { cart } = useCart();
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,7 +23,7 @@ const MyAccount = () => {
   // Verificar si currentUser está presente antes de continuar
   useEffect(() => {
     if (!currentUser) {
-      navigate("/login"); // Redirigir si no hay usuario logueado
+      navigate("/"); // Redirigir si no hay usuario logueado
     }
   }, [currentUser, navigate]);
 
@@ -74,7 +74,10 @@ const MyAccount = () => {
           flex: 1,
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-around",
+          justifyContent: "space-between",
+
+          maxHeight: "300px",
+          overflowY: "auto",
         }}
       >
         <Typography
@@ -88,6 +91,7 @@ const MyAccount = () => {
         >
           Mi Cuenta
         </Typography>
+
         {/* Verificar si currentUser es null o no */}
         {currentUser ? (
           <>

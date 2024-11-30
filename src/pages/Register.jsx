@@ -7,14 +7,15 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const { register } = useAuth();
+  const { register } = useAuth(); // Usamos la función register del contexto
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Llamamos a la función register con nombre, email y contraseña
       await register(email, password, name);
-      navigate("/");
+      navigate("/"); // Redirigir a la página principal después del registro
     } catch (error) {
       console.error("Error en el registro:", error);
     }
@@ -27,7 +28,7 @@ const Register = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "100vh", // Asegura que el formulario esté centrado verticalmente
+        minHeight: "100vh",
       }}
     >
       <Box
@@ -38,10 +39,10 @@ const Register = () => {
           padding: "20px",
           display: "flex",
           flexDirection: "column",
-          gap: 2, // Espaciado entre los elementos del formulario
+          gap: 2,
           backgroundColor: "background.paper",
           borderRadius: "8px",
-          boxShadow: 3, // Sombra para darle un poco de profundidad
+          boxShadow: 3,
         }}
       >
         <Typography
