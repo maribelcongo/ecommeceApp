@@ -253,9 +253,19 @@ const Navbar = () => {
           margin: "15px",
         }}
       >
-        {currentUser && (
-          <Typography variant="h6">Hola, {currentUser.name}</Typography>
-        )}
+        <Typography
+          variant="h6"
+          sx={{
+            fontFamily: "Skranji",
+            color: "#c55e82",
+            fontWeight: "bold",
+            textAlign: "center",
+            fontSize: "1.2rem",
+            marginBottom: 2,
+          }}
+        >
+          {currentUser ? `Hola, ${currentUser.displayName}` : "Bienvenid@s"}
+        </Typography>
 
         {/* Botón de Inicio solo si no estamos en la página de inicio */}
         {!isHomePage && (

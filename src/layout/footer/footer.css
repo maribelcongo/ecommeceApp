@@ -1,61 +1,59 @@
 .footer-container {
-  background-color: #c0adad;
-  padding: 20px;
-  margin-top: 40px;
-  text-align: center;
   display: flex;
-  border: 2px solid #c55e82;
-  align-items: center;
   justify-content: center;
+  padding: 20px;
+  background-color: #c55e824a;
+  flex-wrap: wrap;
 }
 
-.footer-section h3 {
-  font-size: 20px;
+.ico_footer {
+  display: flex;
+  width: 70%;
+  justify-content: space-evenly;
+}
+
+.social-icons,
+.payment-icons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 20px;
+}
+
+h4 {
+  font-size: 18px;
   font-weight: bold;
+  color: #c12e61;
   margin-bottom: 10px;
-  color: #333;
 }
 
-.social-icons {
+.icons-row {
   display: flex;
   justify-content: center;
   gap: 15px;
-}
-
-.social-icon {
-  font-size: 24px;
-  color: #0c0a0a;
-  transition: color 0.3s;
-}
-
-.social-icon:hover {
-  color: #c55e82;
-}
-.footer-container {
-  background-color: #f8f8f8;
-  padding: 20px 0;
-  text-align: center;
-}
-.payment-icons {
-  margin-top: 20px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columnas */
-  grid-gap: 15px; /* Espacio entre los íconos */
-  justify-items: center; /* Centra los íconos horizontalmente */
-}
-
-.payment-text {
-  display: block;
   margin-bottom: 10px;
-  font-size: 18px;
-  font-weight: bold;
 }
 
+.social-icon,
 .payment-icon {
-  font-size: 30px; /* Tamaño de los íconos de pago */
+  font-size: 24px;
   color: #333;
+  transition: color 0.3s ease;
 }
 
+.social-icon:hover,
 .payment-icon:hover {
-  color: #e600c0;
+  color: #ee105d;
+}
+
+@media (max-width: 768px) {
+  .ico_footer {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .social-icons,
+  .payment-icons {
+    margin-bottom: 20px;
+  }
 }

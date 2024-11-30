@@ -1,102 +1,118 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button, TextField, Typography, Box, Container } from "@mui/material";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { TextField, Button, Box, Typography } from "@mui/material";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const { register } = useAuth(); // Usamos la función register del contexto
+  const [name, setName] = useState(""); // Nuevo estado para el nombre
+  const { register } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Llamamos a la función register con nombre, email y contraseña
-      await register(email, password, name);
-      navigate("/"); // Redirigir a la página principal después del registro
+      await register(email, password, name); // Pasar el nombre al registro
+      navigate("/"); // Redirigir después de registro exitoso
     } catch (error) {
       console.error("Error en el registro:", error);
     }
   };
 
   return (
-    <Container
-      maxWidth="xs"
+    <Box
       sx={{
+        p: 3,
+        backgroundColor: "#f5f5f5",
+        borderRadius: "8px",
+        boxShadow: 2,
+        maxWidth: "400px",
+        margin: "0 auto",
         display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
+        flexDirection: "column",
+        marginTop: "30px",
+        gap: 2,
       }}
     >
-      <Box
-        component="form"
-        onSubmit={handleSubmit}
+      <Typography
+        variant="h4"
         sx={{
-          width: "100%",
-          padding: "20px",
-          display: "flex",
-          flexDirection: "column",
-          gap: 2,
-          backgroundColor: "background.paper",
-          borderRadius: "8px",
-          boxShadow: 3,
+          color: "#c55e82",
+          fontWeight: "bold",
+          textAlign: "center",
+          fontFamily: "Skranji",
         }}
       >
-        <Typography
-          variant="h4"
-          align="center"
-          fontFamily="Skranji"
-          gutterBottom
-        >
-          Registrarse
-        </Typography>
-        {/* Campo de nombre */}
+        Registro
+      </Typography>
+
+      <form onSubmit={handleSubmit}>
         <TextField
           label="Nombre"
-          fullWidth
+          type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
-          variant="outlined"
+          fullWidth
+          sx={{
+            mb: 2,
+            "& .MuiInputLabel-root": {
+              fontFamily: "Skranji",
+            },
+            "& .MuiOutlinedInput-root": {
+              fontFamily: "Skranji",
+            },
+          }}
         />
-        {/* Campo de email */}
         <TextField
           label="Email"
           type="email"
-          fullWidth
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          variant="outlined"
+          fullWidth
+          sx={{
+            mb: 2,
+            "& .MuiInputLabel-root": {
+              fontFamily: "Skranji",
+            },
+            "& .MuiOutlinedInput-root": {
+              fontFamily: "Skranji",
+            },
+          }}
         />
-        {/* Campo de contraseña */}
         <TextField
           label="Contraseña"
           type="password"
-          fullWidth
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          variant="outlined"
+          fullWidth
+          sx={{
+            mb: 2,
+            "& .MuiInputLabel-root": {
+              fontFamily: "Skranji",
+            },
+            "& .MuiOutlinedInput-root": {
+              fontFamily: "Skranji",
+            },
+          }}
         />
         <Button
           type="submit"
           variant="contained"
-          color="primary"
+          fullWidth
           sx={{
-            padding: "12px 0",
-            fontSize: "16px",
-            fontWeight: "bold",
-            background: "#c55e82",
+            backgroundColor: "#c55e82",
+            "&:hover": { backgroundColor: "#b04a6e" },
+            fontFamily: "Skranji",
           }}
         >
-          Registrarse
+          Registrar
         </Button>
-      </Box>
-    </Container>
+      </form>
+    </Box>
   );
 };
 
