@@ -1,5 +1,5 @@
 import React from "react";
-import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa"; // Íconos sociales
+import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import {
   FaCcVisa,
   FaCcMastercard,
@@ -7,7 +7,7 @@ import {
   FaCcAmex,
   FaApple,
   FaGooglePay,
-} from "react-icons/fa"; // Íconos de pago
+} from "react-icons/fa";
 import "./footer.css";
 
 const Footer = () => {
@@ -16,7 +16,7 @@ const Footer = () => {
       <div className="ico_footer">
         {/* Sección de redes sociales */}
         <div className="social-icons">
-          <h4>Nuestras redes</h4> {/* Título de redes sociales */}
+          <h4>Nuestras redes</h4>
           <div className="icons-row">
             <a
               href="https://github.com/maribelcongo"
@@ -47,7 +47,7 @@ const Footer = () => {
 
         {/* Sección de medios de pago */}
         <div className="payment-icons">
-          <h4>Medios de pago</h4> {/* Título de medios de pago */}
+          <h4>Medios de pago</h4>
           <div className="icons-row">
             <span className="payment-icon">
               <FaCcVisa />
