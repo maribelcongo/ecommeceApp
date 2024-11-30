@@ -4,7 +4,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useCart } from "../context/CartContext";
 
-import "./OrderConfirmation.css";
+import "./orderConfirmation.css";
 
 const OrderConfirmation = () => {
   const { orderId } = useParams();
