@@ -5,32 +5,24 @@ import {
   signOut,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  updateProfile,
 } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Importar useNavigate
 import { useCart } from "../context/CartContext";
-
+import { updateProfile } from "firebase/auth";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const { clearCart } = useCart();
+  const { clearCart } = useCart(); // Obtener la función para vaciar el carrito
   const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
 
-  // useEffect para escuchar cambios en el estado de autenticación
+  // Este useEffect escucha los cambios de autenticación del usuario
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
     });
     return () => unsubscribe();
   }, []);
-
-  // useEffect para redirigir al inicio cuando no hay usuario
-  useEffect(() => {
-    if (!currentUser) {
-      navigate("/"); // Redirigir al inicio si no hay un usuario
-    }
-  }, [currentUser, navigate]);
 
   // Función de login
   const login = async (email, password) => {
@@ -55,27 +47,30 @@ export const AuthProvider = ({ children }) => {
         email,
         password
       );
-      const user = userCredential.user;
-
-      // Actualizamos el perfil con el nombre
-      await updateProfile(user, {
-        displayName: name,
+      // Aquí actualizamos el perfil con el nombre proporcionado
+      await updateProfile(userCredential.user, {
+        displayName: name, // Establece el nombre de usuario
       });
-
-      setCurrentUser(user);
+      setCurrentUser(userCredential.user);
     } catch (error) {
       console.error("Error en el registro:", error);
       throw error;
     }
   };
-
+  const updateUser = async (user, name) => {
+    try {
+      await updateProfile(user, { displayName: name });
+    } catch (error) {
+      console.error("Error al actualizar el perfil:", error);
+    }
+  };
   // Función para logout
   const logout = async () => {
     try {
-      await signOut(auth); // Cerrar sesión
-      setCurrentUser(null); // Actualizar el estado a null
+      await signOut(auth); // Esperar a que se complete el cierre de sesión
+      setCurrentUser(null); // Actualizar el estado de currentUser
       clearCart(); // Vaciar el carrito
-      navigate("/"); // Redirigir al inicio después de cerrar sesión
+      navigate("/"); // Redirigir al inicio
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
     }

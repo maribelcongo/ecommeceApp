@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useCart } from "../context/CartContext";
 import {
   Button,
@@ -8,14 +8,16 @@ import {
   Card,
   CardContent,
   CardMedia,
-  InputAdornment,
-  TextField,
+  Snackbar,
+  Alert,
+  CardActions,
 } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
   const { cart, removeFromCart, updateQuantity } = useCart();
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const cartTotal = cart.reduce(
     (acc, item) => acc + Number(item.price) * Number(item.quantity),
@@ -35,6 +37,23 @@ const Cart = () => {
   // Función para disminuir la cantidad de un producto
   const handleDecreaseQuantity = (id) => {
     updateQuantity(id, -1); // Disminuye la cantidad en 1
+  };
+
+  // Función para abrir el snackbar cuando se agrega un nuevo producto
+  const handleAddToCartNotification = () => {
+    setOpenSnackbar(true); // Muestra la notificación
+  };
+
+  // Detectamos cuando el carrito cambia
+  useEffect(() => {
+    if (cartItemsCount > 0) {
+      handleAddToCartNotification();
+    }
+  }, [cartItemsCount]);
+
+  // Cerrar Snackbar
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
   };
 
   return (
@@ -182,6 +201,21 @@ const Cart = () => {
       >
         Finalizar compra
       </Button>
+
+      {/* Snackbar de notificación */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          ¡Tienes un producto nuevo en tu carrito!
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
