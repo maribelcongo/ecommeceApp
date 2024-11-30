@@ -56,10 +56,14 @@ export const AuthProvider = ({ children }) => {
 
   // Función para logout
   const logout = async () => {
-    await signOut(auth);
-    setCurrentUser(null);
-    clearCart();
-    navigate("/");
+    try {
+      await signOut(auth); // Esperar a que se complete el cierre de sesión
+      setCurrentUser(null); // Actualizar el estado de currentUser
+      clearCart(); // Vaciar el carrito
+      navigate("/"); // Redirigir al inicio
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
   };
 
   return (
