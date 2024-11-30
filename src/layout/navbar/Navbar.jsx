@@ -245,7 +245,7 @@ const Navbar = () => {
           display: "flex",
           justifyContent: "space-between",
           textAlign: "center",
-          // marginTop: 1,
+
           backgroundColor: "#fff",
           padding: "12px 0",
           fontFamily: "'Skranji', sans-serif",
