@@ -7,7 +7,7 @@ import { updateDoc } from "firebase/firestore";
 import { useCart } from "../context/CartContext";
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 
-import "./orderConfirmation.css"; // Asegúrate de importar el CSS
+import "./orderConfirmation.css";
 
 const OrderConfirmation = () => {
   const { orderId } = useParams();
@@ -30,7 +30,7 @@ const OrderConfirmation = () => {
               const imageUrl = await getImageUrl(product.image);
               return {
                 ...product,
-                imageUrl: imageUrl || "default-image-url", // URL por defecto
+                imageUrl: imageUrl || "default-image-url",
                 price: parseFloat(product.price),
               };
             })
