@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
+import { useNotification } from "../context/NotificationContext"; // Importa el contexto de notificación
 import "./detailProduct.css";
 
 const db = getFirestore();
@@ -27,6 +28,7 @@ const DetailProduct = () => {
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const { currentUser } = useAuth();
+  const { showNotification } = useNotification(); // Obtiene la función showNotification
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -80,10 +82,17 @@ const DetailProduct = () => {
     if (currentUser) {
       const quantity = 1;
       addToCart(product, quantity);
-      navigate("/");
+
+      // Mostrar la notificación
+      showNotification(`¡"${product.name}" agregado al carrito!`);
     } else {
       setOpenModal(true);
     }
+  };
+
+  // Manejar la acción de ir atrás
+  const handleGoBack = () => {
+    navigate(-1); // Vuelve a la página anterior
   };
 
   // Manejar el cierre del modal
@@ -105,6 +114,17 @@ const DetailProduct = () => {
 
   return (
     <div className="detailProductContainer">
+      <Button
+        variant="outlined"
+        onClick={handleGoBack}
+        style={{
+          marginBottom: "20px",
+          color: "#c55e82",
+          borderColor: "#c55e82",
+        }}
+      >
+        Atrás
+      </Button>
       <Card className="detailProductCard">
         <CardMedia
           component="img"

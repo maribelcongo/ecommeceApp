@@ -5,6 +5,9 @@
   padding: 20px;
   gap: 20px;
   flex-wrap: wrap;
+  flex-direction: column;
+
+  margin: 40px 0;
 }
 
 .detailProductCard {

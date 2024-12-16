@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import {
   AppBar,
@@ -14,7 +15,9 @@ import { ShoppingCart, Person, Menu as MenuIcon } from "@mui/icons-material";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
+import { useNotification } from "../../context/NotificationContext";
 import logo from "../../assets/encantadaLogo.jpg";
+import Notification from "../../components/Notification"; 
 import "./navbar.css";
 
 const Navbar = () => {
@@ -25,6 +28,8 @@ const Navbar = () => {
 
   const { cart } = useCart();
   const { currentUser, logout } = useAuth();
+  const { notificationOpen, notificationMessage, showNotification } =
+    useNotification(); // Usamos el contexto de notificación
 
   const handleMenuOpen = (event) => setAnchorElMenu(event.currentTarget);
   const handleMenuClose = () => setAnchorElMenu(null);
@@ -36,112 +41,120 @@ const Navbar = () => {
     0
   );
 
+  const handleAddToCart = () => {
+    // Lógica para agregar un producto al carrito
+    // Luego mostramos la notificación
+    showNotification("¡Producto agregado al carrito!");
+  };
+
   // Verificar si estamos en la página de inicio
   const isHomePage = location.pathname === "/";
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#fff" }}>
-      <Toolbar
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-evenly",
-          height: { xs: 170, sm: 130 },
-          background: "#fff",
-          alignItems: "center",
-        }}
-      >
-        {/* Menú de hamburguesa */}
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{ mr: 2, color: "#c55e82" }}
-          onClick={handleMenuOpen}
+    <>
+      <AppBar position="static" sx={{ backgroundColor: "#fff" }}>
+        <Toolbar
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-evenly",
+            height: { xs: 170, sm: 130 },
+            background: "#fff",
+            alignItems: "center",
+          }}
         >
-          <MenuIcon sx={{ fontSize: 30 }} />
-        </IconButton>
-
-        {/* Logo con enlace al inicio */}
-        <Typography component="div" sx={{ flexGrow: 1, textAlign: "center" }}>
-          <Link to="/" style={{ textDecoration: "none" }}>
-            <img src={logo} alt="Logo" style={{ height: 85 }} />
-          </Link>
-        </Typography>
-
-        {/* Sección de carrito */}
-        <IconButton
-          color="inherit"
-          sx={{ color: "#c55e82" }}
-          onClick={() => navigate("/carrito")}
-        >
-          <Badge
-            badgeContent={cartItemsCount}
-            color="error"
-            sx={{ "& .MuiBadge-dot": { backgroundColor: "#ff5722" } }}
+          {/* Menú de hamburguesa */}
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2, color: "#c55e82" }}
+            onClick={handleMenuOpen}
           >
-            <ShoppingCart sx={{ fontSize: 30 }} />
-          </Badge>
-        </IconButton>
+            <MenuIcon sx={{ fontSize: 30 }} />
+          </IconButton>
 
-        {/* Menú de usuario */}
-        <IconButton
-          edge="end"
-          color="inherit"
-          aria-label="user"
-          sx={{ color: "#c55e82" }}
-          onClick={handleUserMenuOpen}
-        >
-          <Person sx={{ fontSize: 30 }} />
-        </IconButton>
+          {/* Logo con enlace al inicio */}
+          <Typography component="div" sx={{ flexGrow: 1, textAlign: "center" }}>
+            <Link to="/" style={{ textDecoration: "none" }}>
+              <img src={logo} alt="Logo" style={{ height: 85 }} />
+            </Link>
+          </Typography>
 
-        {/* Menú de opciones de usuario */}
-        <Menu
-          anchorEl={anchorElUser}
-          open={Boolean(anchorElUser)}
-          onClose={handleUserMenuClose}
-        >
-          {!currentUser ? (
-            <div>
-              <MenuItem
-                onClick={() => {
-                  handleUserMenuClose();
-                  navigate("/login");
-                }}
-              >
-                Iniciar Sesión
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  handleUserMenuClose();
-                  navigate("/register");
-                }}
-              >
-                Registrarse
-              </MenuItem>
-            </div>
-          ) : (
-            <div>
-              <MenuItem
-                onClick={() => {
-                  handleUserMenuClose();
-                  navigate("/mi-cuenta");
-                }}
-              >
-                Mi Cuenta
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  logout();
-                  handleUserMenuClose();
-                }}
-              >
-                Cerrar Sesión
-              </MenuItem>
-            </div>
-          )}
-        </Menu>
-      </Toolbar>
+          {/* Sección de carrito */}
+          <IconButton
+            color="inherit"
+            sx={{ color: "#c55e82" }}
+            onClick={() => navigate("/carrito")}
+          >
+            <Badge
+              badgeContent={cartItemsCount}
+              color="error"
+              sx={{ "& .MuiBadge-dot": { backgroundColor: "#ff5722" } }}
+            >
+              <ShoppingCart sx={{ fontSize: 30 }} />
+            </Badge>
+          </IconButton>
+
+          {/* Menú de usuario */}
+          <IconButton
+            edge="end"
+            color="inherit"
+            aria-label="user"
+            sx={{ color: "#c55e82" }}
+            onClick={handleUserMenuOpen}
+          >
+            <Person sx={{ fontSize: 30 }} />
+          </IconButton>
+
+          {/* Menú de opciones de usuario */}
+          <Menu
+            anchorEl={anchorElUser}
+            open={Boolean(anchorElUser)}
+            onClose={handleUserMenuClose}
+          >
+            {!currentUser ? (
+              <div>
+                <MenuItem
+                  onClick={() => {
+                    handleUserMenuClose();
+                    navigate("/login");
+                  }}
+                >
+                  Iniciar Sesión
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleUserMenuClose();
+                    navigate("/register");
+                  }}
+                >
+                  Registrarse
+                </MenuItem>
+              </div>
+            ) : (
+              <div>
+                <MenuItem
+                  onClick={() => {
+                    handleUserMenuClose();
+                    navigate("/mi-cuenta");
+                  }}
+                >
+                  Mi Cuenta
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    logout();
+                    handleUserMenuClose();
+                  }}
+                >
+                  Cerrar Sesión
+                </MenuItem>
+              </div>
+            )}
+          </Menu>
+        </Toolbar>
+      </AppBar>
 
       {/* Menú de hamburguesa */}
       <Menu
@@ -261,7 +274,7 @@ const Navbar = () => {
             fontWeight: "bold",
             textAlign: "center",
             fontSize: "1.2rem",
-            marginBottom: 2,
+            padding: "3px",
           }}
         >
           {currentUser ? `Hola, ${currentUser.displayName}` : "Bienvenid@s"}
@@ -283,7 +296,10 @@ const Navbar = () => {
           </Button>
         )}
       </Box>
-    </AppBar>
+
+      {/* Notificación */}
+      <Notification />
+    </>
   );
 };
 

@@ -1,16 +1,29 @@
-import React, { useState } from "react";
-import { useCart } from "../context/CartContext"; // Usamos el hook del carrito
+import React, { useState, useEffect } from "react";
+import { useCart } from "../context/CartContext";
 import { Button, TextField, Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Checkout = () => {
   const { cart, checkout } = useCart(); // Accedemos al carrito y la función de checkout
+  const { currentUser } = useAuth(); // Accedemos a los datos del usuario actual
   const navigate = useNavigate(); // Usamos el hook para navegar
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: "",
     address: "",
   });
+
+  // Precargar el nombre y el correo del usuario en el formulario
+  useEffect(() => {
+    if (currentUser) {
+      setUserInfo({
+        ...userInfo,
+        name: currentUser.displayName || "", // Nombre del usuario
+        email: currentUser.email || "", // Correo del usuario
+      });
+    }
+  }, [currentUser]); // Dependencia en currentUser para actualizar los datos
 
   // Manejar el cambio de los campos del formulario
   const handleInputChange = (e) => {

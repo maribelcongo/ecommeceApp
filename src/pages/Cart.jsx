@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useCart } from "../context/CartContext";
 import {
-  Button,
-  Typography,
-  IconButton,
   Box,
+  Typography,
   Card,
   CardContent,
   CardMedia,
-  Snackbar,
-  Alert,
-  CardActions,
+  IconButton,
+  Button,
 } from "@mui/material";
 import { Delete } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useNotification } from "../context/NotificationContext"; // Importar el contexto
 
 const Cart = () => {
   const { cart, removeFromCart, updateQuantity } = useCart();
-  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const navigate = useNavigate(); // Usamos `useNavigate` para navegar hacia atrás
+  const { showNotification } = useNotification(); // Usamos el contexto de notificación
 
   const cartTotal = cart.reduce(
     (acc, item) => acc + Number(item.price) * Number(item.quantity),
@@ -32,6 +31,7 @@ const Cart = () => {
   // Función para incrementar la cantidad de un producto
   const handleIncreaseQuantity = (id) => {
     updateQuantity(id, 1); // Aumenta la cantidad en 1
+    showNotification("Producto agregado al carrito");
   };
 
   // Función para disminuir la cantidad de un producto
@@ -39,21 +39,9 @@ const Cart = () => {
     updateQuantity(id, -1); // Disminuye la cantidad en 1
   };
 
-  // Función para abrir el snackbar cuando se agrega un nuevo producto
-  const handleAddToCartNotification = () => {
-    setOpenSnackbar(true); // Muestra la notificación
-  };
-
-  // Detectamos cuando el carrito cambia
-  useEffect(() => {
-    if (cartItemsCount > 0) {
-      handleAddToCartNotification();
-    }
-  }, [cartItemsCount]);
-
-  // Cerrar Snackbar
-  const handleCloseSnackbar = () => {
-    setOpenSnackbar(false);
+  // Función para ir hacia atrás
+  const handleGoBack = () => {
+    navigate(-1); // Vuelve a la página anterior
   };
 
   return (
@@ -69,6 +57,18 @@ const Cart = () => {
         marginTop: "30px",
       }}
     >
+      <Button
+        variant="outlined"
+        onClick={handleGoBack}
+        style={{
+          marginBottom: "30px",
+          color: "#c55e82",
+          borderColor: "#c55e82",
+        }}
+      >
+        Atrás
+      </Button>
+
       <Typography
         variant="h4"
         sx={{
@@ -80,13 +80,7 @@ const Cart = () => {
       >
         Carrito de Compras
       </Typography>
-      <Typography
-        variant="h6"
-        sx={{
-          margin: "20px 0",
-          fontFamily: "Skranji",
-        }}
-      >
+      <Typography variant="h6" sx={{ margin: "20px 0", fontFamily: "Skranji" }}>
         Productos en el carrito: {cartItemsCount}
       </Typography>
 
@@ -142,10 +136,7 @@ const Cart = () => {
               <IconButton
                 onClick={() => handleDecreaseQuantity(item.id)}
                 disabled={item.quantity <= 1}
-                sx={{
-                  color: "#c55e82",
-                  "&:hover": { color: "#b04a6e" },
-                }}
+                sx={{ color: "#c55e82", "&:hover": { color: "#b04a6e" } }}
               >
                 -
               </IconButton>
@@ -154,10 +145,7 @@ const Cart = () => {
               </Typography>
               <IconButton
                 onClick={() => handleIncreaseQuantity(item.id)}
-                sx={{
-                  color: "#c55e82",
-                  "&:hover": { color: "#b04a6e" },
-                }}
+                sx={{ color: "#c55e82", "&:hover": { color: "#b04a6e" } }}
               >
                 +
               </IconButton>
@@ -166,10 +154,7 @@ const Cart = () => {
             <IconButton
               onClick={() => removeFromCart(item.id)}
               aria-label="remove"
-              sx={{
-                color: "#c55e82",
-                "&:hover": { color: "#b04a6e" },
-              }}
+              sx={{ color: "#c55e82", "&:hover": { color: "#b04a6e" } }}
             >
               <Delete />
             </IconButton>
@@ -179,10 +164,7 @@ const Cart = () => {
 
       <Typography
         variant="h6"
-        sx={{
-          marginTop: "20px",
-          fontFamily: "Skranji",
-        }}
+        sx={{ marginTop: "20px", fontFamily: "Skranji" }}
       >
         Total: ${cartTotal.toFixed(2)}
       </Typography>
@@ -201,21 +183,6 @@ const Cart = () => {
       >
         Finalizar compra
       </Button>
-
-      {/* Snackbar de notificación */}
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={3000}
-        onClose={handleCloseSnackbar}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          ¡Tienes un producto nuevo en tu carrito!
-        </Alert>
-      </Snackbar>
     </Box>
   );
 };

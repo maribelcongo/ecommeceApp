@@ -41,8 +41,8 @@ const MyOrders = () => {
           return {
             id: doc.id,
             ...orderData,
-            status: "finalizada", // Forzamos el estado a 'finalizada'
-            createdAt: createdAt, // Añadimos la fecha procesada o null si no existe
+            status: "finalizada",
+            createdAt: createdAt,
           };
         });
         setOrders(fetchedOrders);
@@ -56,7 +56,7 @@ const MyOrders = () => {
   return (
     <Box
       sx={{
-        width: { xs: "100%", sm: "70%" }, // Ancho 100% en pantallas pequeñas, 70% en pantallas grandes
+        width: { xs: "100%", sm: "70%" },
         margin: "auto",
         marginTop: "30px",
         padding: 3,

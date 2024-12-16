@@ -1,42 +1,50 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+import { getImageUrl } from "../../firebase";
+import { updateDoc } from "firebase/firestore";
 import { useCart } from "../context/CartContext";
+import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 
-import "./orderConfirmation.css";
+import "./orderConfirmation.css"; // Asegúrate de importar el CSS
 
 const OrderConfirmation = () => {
   const { orderId } = useParams();
   const [orderDetails, setOrderDetails] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { clearCart } = useCart(); // Obtén la función clearCart desde el contexto
+  const { clearCart } = useCart();
 
   useEffect(() => {
-    // Esta función se encargará de obtener los detalles de la orden desde Firestore
     const fetchOrderDetails = async () => {
       try {
-        // Obtenemos la referencia al documento en la colección 'orders' con el 'orderId'
         const orderRef = doc(db, "orders", orderId);
-        const orderSnap = await getDoc(orderRef); // Obtenemos los detalles de la orden
+        const orderSnap = await getDoc(orderRef);
 
-        // Verificamos si el documento existe
         if (orderSnap.exists()) {
           const data = orderSnap.data();
-          // Aseguramos que todos los precios sean números y no cadenas
-          data.products = data.products.map((product) => ({
-            ...product,
-            price: parseFloat(product.price), // Convertimos el precio a número
-          }));
-          setOrderDetails(data); // Establecemos los datos de la orden en el estado
 
-          // Actualizamos el estado de la orden a "finalizada" en Firebase
+          // Obtener las URLs de las imágenes para cada producto
+          data.products = await Promise.all(
+            data.products.map(async (product) => {
+              const imageUrl = await getImageUrl(product.image);
+              return {
+                ...product,
+                imageUrl: imageUrl || "default-image-url", // URL por defecto
+                price: parseFloat(product.price),
+              };
+            })
+          );
+
+          setOrderDetails(data);
+
+          // Actualizar el estado de la orden a "finalizada"
           await updateDoc(orderRef, {
             status: "finalizada",
-            completedAt: new Date(), // Fecha de finalización
+            completedAt: new Date(),
           });
 
-          clearCart(); // Vaciar el carrito cuando la orden se haya procesado
+          clearCart(); // Vaciar el carrito
         } else {
           throw new Error("La orden no existe.");
         }
@@ -47,8 +55,8 @@ const OrderConfirmation = () => {
       }
     };
 
-    fetchOrderDetails(); // Llamamos la función para obtener los datos
-  }, [orderId, clearCart]); // Dependemos de 'orderId' para volver a ejecutar el efecto
+    fetchOrderDetails(); // Llamada para obtener detalles de la orden
+  }, [orderId, clearCart]);
 
   if (loading) {
     return (
@@ -72,17 +80,24 @@ const OrderConfirmation = () => {
         Tu ID de orden es: <strong>{orderId}</strong>
       </p>
       <div className="totalAmount">Total: ${orderDetails.total}</div>
-      <p>Productos comprados:</p>
-      <ul>
+      <div className="productsSection">
         {orderDetails.products.map((product) => (
-          <li key={product.id}>
-            <span>{product.name}</span> -{" "}
-            <span>
-              {product.quantity} x ${product.price}
-            </span>
-          </li>
+          <div key={product.id} className="productCard">
+            <CardMedia
+              component="img"
+              sx={{ width: 100, height: 100, objectFit: "cover" }}
+              image={product.imageUrl}
+              alt={product.name}
+            />
+            <CardContent className="productDetails">
+              <Typography variant="h6">{product.name}</Typography>
+              <Typography variant="body1">
+                {product.quantity} x ${product.price}
+              </Typography>
+            </CardContent>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
